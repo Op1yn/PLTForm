@@ -9,7 +9,7 @@ public class EnemyStateMachine
 
     public void AddState(EnemyState _enemyState)
     {
-        _states.Add(_enemyState.GetType(), _enemyState);//ЕСЛИ ДОБАВИТЬ СОСТОЯНИЕ КОТОРОЕ УЖЕ ЕСТЬ, то выскачит ошибка. Надо будет это обработать.
+        _states.Add(_enemyState.GetType(), _enemyState);
     }
 
     public void SetState<T>(Transform target) where T : EnemyState

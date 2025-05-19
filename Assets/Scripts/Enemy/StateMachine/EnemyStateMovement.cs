@@ -11,36 +11,13 @@ public class EnemyStateMovement : EnemyState
         _speed = speed;
     }
 
-    public override void Enter(Transform T)
-    {
-        Debug.Log("ENTER");
-    }
-
     public override void Update()
     {
-        Debug.Log("UPDATE");
         Move();
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("EXIT");
     }
 
     public virtual void Move()
     {
-        if (Target == null)
-        {
-            Debug.Log("Таргет Пустой");
-        }
-
-        if (_transform == null)
-        {
-            Debug.Log("ТРансформ Пустой");
-        }
-
-        Debug.Log($"Имя Цели {Target.name}");
-
         _transform.position = Vector2.MoveTowards(_transform.position, Target.transform.position, _speed * Time.deltaTime);
     }
 }

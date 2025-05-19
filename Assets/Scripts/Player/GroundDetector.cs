@@ -29,7 +29,6 @@ public class GroundDetector : MonoBehaviour
         {
             AmountTouchesGround--;
             IsGround = false;
-            LeavingOffGround?.Invoke();
         }
     }
 }

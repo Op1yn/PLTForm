@@ -1,10 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStateJump : PlayerState
 {
-    public PlayerStateJump(PlayerStateMachine playerStateMachine) : base(playerStateMachine)
+    private PlayerMover _playerMover;
+
+    public PlayerStateJump(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, PlayerMover playerMover) : base(playerStateMachine, inputReader, groundDetector, playerAnimator)
     {
+        _playerMover = playerMover; 
+    }
+
+    public override void Enter()
+    {
+        _playerMover.Jump();
+        PlayerAnimator.SetIsJumpingTrue();
+        GroundDetector.Landed += SetStatePlayerStateIdle;
+    }
+
+    private void SetStatePlayerStateIdle()
+    {
+        PlayerStateMachine.SetState<PlayerStateIdle>();
+    }
+
+    public override void Exit()
+    {
+        PlayerAnimator.SetIsJumpingFalse();
+        GroundDetector.Landed -= SetStatePlayerStateIdle;
     }
 }

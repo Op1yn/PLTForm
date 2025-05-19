@@ -14,9 +14,6 @@ public class EnemyStatePersecution : EnemyStateMovement
     public override void Enter(Transform T)
     {
         SetTarget(T);
-
-        Debug.Log(T);
-        Debug.Log("Вошёл в преследование");
     }
 
     public override void Update()

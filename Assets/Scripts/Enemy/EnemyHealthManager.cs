@@ -14,7 +14,5 @@ public class EnemyHealthManager : MonoBehaviour, IDamageable
         {
             gameObject.SetActive(false);
         }
-
-        //Debug.Log($"{gameObject.name} - {_health} здоровья");
     }
 }

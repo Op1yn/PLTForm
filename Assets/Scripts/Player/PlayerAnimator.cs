@@ -1,56 +1,45 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private InputReader _inputReader;
     [SerializeField] private GroundDetector _groundingDetector;
     [SerializeField] private PlayerDamageDealer _damageDealer;
+
+    public event Action StruckWith;
 
     public static readonly int Speed = Animator.StringToHash(nameof(Speed));
     public static readonly int IsJumping = Animator.StringToHash(nameof(IsJumping));
     public static readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
 
-    private void OnEnable()
+    public void SetSpeed(float speed)
     {
-        _groundingDetector.LeavingOffGround += SetIsJumpingOffGround;
-        _groundingDetector.Landed += SetIsJumpingLanding;
-        _damageDealer.AttackBegun += ActivateIsAttacking;
-        _damageDealer.AttackOver += DeactivateIsAttacking;
+        _animator.SetFloat(Speed, Mathf.Abs(speed));
     }
 
-    private void FixedUpdate()
-    {
-        _animator.SetFloat(Speed, Mathf.Abs(_inputReader.Direction));
-    }
-
-    private void OnDisable()
-    {
-        _groundingDetector.LeavingOffGround -= SetIsJumpingOffGround;
-        _groundingDetector.Landed -= SetIsJumpingLanding;
-        _damageDealer.AttackBegun -= ActivateIsAttacking;
-        _damageDealer.AttackOver -= DeactivateIsAttacking;
-    }
-
-    private void SetIsJumpingLanding()
+    public void SetIsJumpingFalse()
     {
         _animator.SetBool(IsJumping, false);
     }
 
-    private void SetIsJumpingOffGround()
+    public void SetIsJumpingTrue()
     {
         _animator.SetBool(IsJumping, true);
     }
 
-    private void ActivateIsAttacking()
+    public void StartAttackAnimation()
     {
-        //Debug.Log("ActivateIsAttacking");
         _animator.SetBool(IsAttacking, true);
     }
 
-    private void DeactivateIsAttacking()
+    public void StopAttackAnimation()
     {
-        //Debug.Log("DeactivateIsAttacking");
         _animator.SetBool(IsAttacking, false);
+    }
+
+    public void ReportAttack()
+    {
+        StruckWith?.Invoke();
     }
 }

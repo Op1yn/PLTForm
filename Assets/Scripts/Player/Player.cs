@@ -3,19 +3,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private GroundDetector _groundingDetector;
-    [SerializeField] private PlayerMover _playerMover;
+    [SerializeField] private float _speedX;
+    [SerializeField] private float _jumpForce;
 
+
+    [field: SerializeField] public InputReader InputReader { get; private set; }
+    [field: SerializeField] public Rigidbody2D Rigidbody { get; private set; }
+    [field: SerializeField] public PlayerAnimator PlayerAnimator { get; private set; }
     public PlayerStateMachine PlayerStateMachine { get; private set; }
+    public PlayerMover PlayerMover { get; private set; }
 
     private void Start()
     {
-        Debug.Log("Start PlayerStateMachine");
-
+        PlayerMover = new PlayerMover(Rigidbody, _speedX, _jumpForce);
         PlayerStateMachine = new PlayerStateMachine();
 
-        PlayerStateMachine.AddState(new PlayerStateIdle(PlayerStateMachine));
-        PlayerStateMachine.AddState(new PlayerStateMove(PlayerStateMachine));
-        PlayerStateMachine.AddState(new PlayerStateJump(PlayerStateMachine));
+        PlayerStateMachine.AddState(new PlayerStateIdle(PlayerStateMachine, InputReader, _groundingDetector, PlayerAnimator));
+        PlayerStateMachine.AddState(new PlayerStateMove(PlayerStateMachine, PlayerMover, InputReader, _groundingDetector, PlayerAnimator, transform));
+        PlayerStateMachine.AddState(new PlayerStateJump(PlayerStateMachine, InputReader, _groundingDetector, PlayerAnimator, PlayerMover));
+        PlayerStateMachine.AddState(new PlayerStateAttack(PlayerStateMachine, InputReader, _groundingDetector, PlayerAnimator));
 
         PlayerStateMachine.SetState<PlayerStateIdle>();
     }

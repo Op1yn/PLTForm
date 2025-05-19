@@ -13,11 +13,6 @@ public class EnemyStatePatrolling : EnemyStateMovement
         SetTarget(_routePoints[0]);
     }
 
-    public override void Enter(Transform T)
-    {
-        Debug.Log("Вошёл в патрулирование");
-    }
-
     public override void Update()
     {
         if (HasPointReached())
@@ -33,10 +28,6 @@ public class EnemyStatePatrolling : EnemyStateMovement
         base.Update();
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
 
     private bool HasPointReached()
     {

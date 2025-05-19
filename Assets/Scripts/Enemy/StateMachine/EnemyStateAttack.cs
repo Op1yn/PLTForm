@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EnemyStateAttack : EnemyState
 {
-    //В аниматоре нужно сделать систему как описано тут https://t.me/KaDR_gamedev/176
-
     private int _damage = 25;
     private float _timeLastStrike = 0;
     private float _delayBetweenAttacks = 2.2f;
@@ -27,11 +25,6 @@ public class EnemyStateAttack : EnemyState
             _enemyAnimator.StopAttackAnimation();
             _enemyStateMachine.SetState<EnemyStatePersecution>(Target);
         }
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Вышел из Атаки");
     }
 
     private void TryInflictDamage()

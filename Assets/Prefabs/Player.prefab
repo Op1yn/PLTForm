@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3829087386337885444}
   - component: {fileID: 591539180850692735}
   - component: {fileID: 8949679198474453341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,9 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3829087386337885444}
-  _inputReader: {fileID: 3759794298881496168}
   _groundingDetector: {fileID: 7319127998828846304}
-  _damageDealer: {fileID: 7075628102539092644}
+  _damageDealer: {fileID: 0}
 --- !u!1 &1419374913503134234
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,12 +133,11 @@ GameObject:
   - component: {fileID: 8379091482398116337}
   - component: {fileID: 1363719377892852633}
   - component: {fileID: 3818061541015172369}
-  - component: {fileID: 5426624103659329148}
-  - component: {fileID: 3759794298881496168}
-  - component: {fileID: 8065772400670668076}
   - component: {fileID: 5000689000265414416}
-  - component: {fileID: 6209516910928308736}
-  m_Layer: 0
+  - component: {fileID: 3471378193059320005}
+  - component: {fileID: 859629334858197270}
+  - component: {fileID: 5118223511021029579}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,6 +161,7 @@ Transform:
   - {fileID: 5656604710958909995}
   - {fileID: 64292242334421115}
   - {fileID: 8838139757308807375}
+  - {fileID: 7701177409296020053}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1363719377892852633
@@ -227,49 +226,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.14114287, y: -0.46146894}
   m_Size: {x: 0.9257248, y: 2.3968043}
   m_Direction: 0
---- !u!114 &5426624103659329148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419374913503134234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0279fc162cc852e4c80893ca97ad71a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputReader: {fileID: 3759794298881496168}
-  _groundingDetector: {fileID: 7319127998828846304}
-  _playerMover: {fileID: 8065772400670668076}
---- !u!114 &3759794298881496168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419374913503134234}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e704965c07d994aade6d9f14957b52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8065772400670668076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419374913503134234}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5e2f6f8cb2ac74488487c17099a37f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputReader: {fileID: 3759794298881496168}
-  _damageDealer: {fileID: 7075628102539092644}
-  _speedX: 400
-  _jumpForce: 20
 --- !u!114 &5000689000265414416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coinAmount: 0
---- !u!114 &6209516910928308736
+--- !u!114 &3471378193059320005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,9 +248,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419374913503134234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a17a0ea1686200c42a47844f82eaa669, type: 3}
+  m_Script: {fileID: 11500000, guid: 0279fc162cc852e4c80893ca97ad71a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _groundingDetector: {fileID: 7319127998828846304}
+  _speedX: 350
+  _jumpForce: 18
+  <InputReader>k__BackingField: {fileID: 859629334858197270}
+  <Rigidbody>k__BackingField: {fileID: 1363719377892852633}
+  <PlayerAnimator>k__BackingField: {fileID: 8949679198474453341}
+--- !u!114 &859629334858197270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419374913503134234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e704965c07d994aade6d9f14957b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5118223511021029579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419374913503134234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653179354f2758f41a50478793c1d35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8949679198474453341}
+  _attackDetector: {fileID: 6895276874319025232}
+  _damage: 20
 --- !u!1 &3947310528254680501
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,8 +294,8 @@ GameObject:
   m_Component:
   - component: {fileID: 64292242334421115}
   - component: {fileID: 3089838244094192716}
-  - component: {fileID: 7075628102539092644}
-  m_Layer: 0
+  - component: {fileID: 6895276874319025232}
+  m_Layer: 6
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +369,7 @@ PolygonCollider2D:
       - {x: 0.39535034, y: -0.3388945}
       - {x: 0.4146677, y: 0.053394422}
   m_UseDelaunayMesh: 0
---- !u!114 &7075628102539092644
+--- !u!114 &6895276874319025232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -389,11 +378,89 @@ MonoBehaviour:
   m_GameObject: {fileID: 3947310528254680501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 653179354f2758f41a50478793c1d35a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d7c61d93c1ad344e9bace7ea2056a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 3759794298881496168}
-  _groundDetector: {fileID: 7319127998828846304}
+--- !u!1 &5502946509194720927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7701177409296020053}
+  - component: {fileID: 2746815494876143217}
+  - component: {fileID: 4723070343232355722}
+  m_Layer: 6
+  m_Name: HealthManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7701177409296020053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502946509194720927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8379091482398116337}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2746815494876143217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502946509194720927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17a0ea1686200c42a47844f82eaa669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &4723070343232355722
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502946509194720927}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.13464195, y: -0.46162936}
+  m_Size: {x: 1.0538567, y: 2.5077925}
+  m_Direction: 0
 --- !u!1 &7114038052582731963
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +472,7 @@ GameObject:
   - component: {fileID: 8838139757308807375}
   - component: {fileID: 6210695758103477111}
   - component: {fileID: 2640494385934991244}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CoinCollector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +563,7 @@ GameObject:
   - component: {fileID: 3965085682213930343}
   - component: {fileID: 7319127998828846304}
   - component: {fileID: 6956442758434221728}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundingController
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,8 +16,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start");
-
         _enemyStateMachine = new EnemyStateMachine();
 
         _enemyStateMachine.AddState(new EnemyStatePatrolling(_enemyStateMachine, transform, _patrolSpeed, _routePoints, _enemyFlipper, _enemyPersecutionManager, _enemyAttackDetector, _enemyAnimator));

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerStateMachine
 {
@@ -9,7 +8,7 @@ public class PlayerStateMachine
 
     public void AddState(PlayerState playerState)
     {
-        _states.Add(playerState.GetType(), playerState);//ЕСЛИ ДОБАВИТЬ СОСТОЯНИЕ КОТОРОЕ УЖЕ ЕСТЬ, то выскачит ошибка. Надо будет это обработать.
+        _states.Add(playerState.GetType(), playerState);
     }
 
     public void SetState<T>() where T : PlayerState

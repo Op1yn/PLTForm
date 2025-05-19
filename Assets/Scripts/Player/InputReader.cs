@@ -5,8 +5,8 @@ public class InputReader : MonoBehaviour
 {
     private const string Horizontal = "Horizontal";
 
-    public event Action JumpBeenPressed;
-    public event Action AttackButtonBeenPressed;
+    public event Action JumpingButtonPressed;
+    public event Action AttackButtonPressed;
     
     public float Direction { get; private set; }
 
@@ -16,12 +16,12 @@ public class InputReader : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            JumpBeenPressed?.Invoke();
+            JumpingButtonPressed?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            AttackButtonBeenPressed?.Invoke();
+            AttackButtonPressed?.Invoke();
         }
     }
 }
