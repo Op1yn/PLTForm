@@ -12,15 +12,15 @@ public class PlayerStateAttack : PlayerState
     public override void Enter()
     {
         _timeLastStrike = Time.time;
-        PlayerAnimator.StartAttackAnimation();
+        PlayerAnimator.StartAttack();
     }
 
     public override void Update()
     {
         if (_timeLastStrike + _delayBetweenAttacks < Time.time)
         {
-            PlayerAnimator.StopAttackAnimation();
-            PlayerStateMachine.SetState<PlayerStateIdle>();
+            PlayerAnimator.StopAttack();
+            PlayerStateMachine.ChangeState<PlayerStateIdle>();
         }
     }
 }

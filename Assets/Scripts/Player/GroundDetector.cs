@@ -4,7 +4,7 @@ using UnityEngine;
 public class GroundDetector : MonoBehaviour
 {
     public event Action Landed;
-    public event Action LeavingOffGround;
+
     public bool IsGround { get; private set; }
     public int AmountTouchesGround { get; private set; } = 0;
 

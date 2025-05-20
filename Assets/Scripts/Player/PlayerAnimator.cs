@@ -4,42 +4,41 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private GroundDetector _groundingDetector;
-    [SerializeField] private PlayerDamageDealer _damageDealer;
 
-    public event Action StruckWith;
+    public event Action CompletedStrike;
 
     public static readonly int Speed = Animator.StringToHash(nameof(Speed));
-    public static readonly int IsJumping = Animator.StringToHash(nameof(IsJumping));
     public static readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
+    public static readonly int Jumping = Animator.StringToHash(nameof(Jumping));
+    public static readonly int Graunded = Animator.StringToHash(nameof(Graunded));
 
     public void SetSpeed(float speed)
     {
         _animator.SetFloat(Speed, Mathf.Abs(speed));
     }
 
-    public void SetIsJumpingFalse()
+    public void Jump()
     {
-        _animator.SetBool(IsJumping, false);
+        _animator.SetBool(Jumping, true);
     }
 
-    public void SetIsJumpingTrue()
+    public void StopJump()
     {
-        _animator.SetBool(IsJumping, true);
+        _animator.SetBool(Graunded, true);
     }
 
-    public void StartAttackAnimation()
+    public void StartAttack()
     {
         _animator.SetBool(IsAttacking, true);
     }
 
-    public void StopAttackAnimation()
+    public void StopAttack()
     {
         _animator.SetBool(IsAttacking, false);
     }
 
     public void ReportAttack()
     {
-        StruckWith?.Invoke();
+        CompletedStrike?.Invoke();
     }
 }

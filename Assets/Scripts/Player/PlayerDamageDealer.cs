@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerDamageDealer : MonoBehaviour
@@ -7,17 +6,19 @@ public class PlayerDamageDealer : MonoBehaviour
     [SerializeField] private PlayerAttackDetector _attackDetector;
     [SerializeField] private int _damage = 20;
 
-    public event Action AttackBegun;
-    public event Action AttackOver;
-
-    private void Start()
+    private void OnEnable()
     {
-        _animator.StruckWith += TryInflictDamage;
+        _animator.CompletedStrike += TryInflictDamage;
+    }
+
+    private void OnDisable()
+    {
+        _animator.CompletedStrike -= TryInflictDamage;
     }
 
     private void TryInflictDamage()
     {
-        for (int i = 0; i < _attackDetector.CanTakeDamage.Count; i++)
+        for (int i = 0; i < _attackDetector.GetAmountTargets(); i++)
         {
             _attackDetector.GetHealthManager(i).TakeDamage(_damage);
         }

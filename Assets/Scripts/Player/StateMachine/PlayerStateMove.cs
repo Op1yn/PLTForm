@@ -2,14 +2,29 @@ using UnityEngine;
 
 public class PlayerStateMove : PlayerStateMovement
 {
-    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform) : base(playerStateMachine, playerMover, inputReader, groundDetector, playerAnimator, transform)
+    private Flipper _flipper;
+
+    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform, Flipper flipper) : base(playerStateMachine, playerMover, inputReader, groundDetector, playerAnimator, transform)
     {
+        _flipper = flipper;
     }
 
     public override void Enter()
     {
         InputReader.JumpingButtonPressed += TrySetJumpState;
         InputReader.AttackButtonPressed += TrySetAttackState;
+    }
+
+    public override void Update()
+    {
+        _flipper.TurnFront(InputReader.Direction);
+    }
+
+    public override void Exit()
+    {
+        PlayerAnimator.SetSpeed(0);
+        InputReader.JumpingButtonPressed -= TrySetJumpState;
+        InputReader.AttackButtonPressed -= TrySetAttackState;
     }
 
     public override void FixedUpdate()
@@ -19,7 +34,7 @@ public class PlayerStateMove : PlayerStateMovement
 
         if (InputReader.Direction == 0)
         {
-            PlayerStateMachine.SetState<PlayerStateIdle>();
+            PlayerStateMachine.ChangeState<PlayerStateIdle>();
         }
 
         PlayerAnimator.SetSpeed(InputReader.Direction);
@@ -29,7 +44,7 @@ public class PlayerStateMove : PlayerStateMovement
     {
         if (GroundDetector.IsGround)
         {
-            PlayerStateMachine.SetState<PlayerStateJump>();
+            PlayerStateMachine.ChangeState<PlayerStateJump>();
         }
     }
 
@@ -37,14 +52,7 @@ public class PlayerStateMove : PlayerStateMovement
     {
         if (GroundDetector.IsGround)
         {
-            PlayerStateMachine.SetState<PlayerStateAttack>();
+            PlayerStateMachine.ChangeState<PlayerStateAttack>();
         }
-    }
-
-    public override void Exit()
-    {
-        PlayerAnimator.SetSpeed(0);
-        InputReader.JumpingButtonPressed -= TrySetJumpState;
-        InputReader.AttackButtonPressed -= TrySetAttackState;
     }
 }

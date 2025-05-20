@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class PlayerStateMachine
 {
-    private PlayerState CurrentState { get; set; }
+    private PlayerState _currentState;
     private Dictionary<Type, PlayerState> _states = new Dictionary<Type, PlayerState>();
 
     public void AddState(PlayerState playerState)
@@ -11,28 +11,28 @@ public class PlayerStateMachine
         _states.Add(playerState.GetType(), playerState);
     }
 
-    public void SetState<T>() where T : PlayerState
+    public void ChangeState<T>() where T : PlayerState
     {
         var type = typeof(T);
 
-        if (CurrentState != null && CurrentState.GetType() == type)
+        if (_currentState != null && _currentState.GetType() == type)
             return;
 
         if (_states.TryGetValue(type, out var newState))
         {
-            CurrentState?.Exit();
-            CurrentState = newState;
-            CurrentState.Enter();
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState.Enter();
         }
     }
 
     public void Update()
     {
-        CurrentState?.Update();
+        _currentState?.Update();
     }
 
     public void FixedUpdate()
     {
-        CurrentState?.FixedUpdate();
+        _currentState?.FixedUpdate();
     }
 }

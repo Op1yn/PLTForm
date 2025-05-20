@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public class PlayerFlipper : MonoBehaviour
+public class Flipper : MonoBehaviour
 {
-    [SerializeField] private InputReader _inputReader;
     private int reversDirection = 180;
-
-    private void FixedUpdate()
-    {
-        TurnFront(_inputReader.Direction);
-    }
 
     public void TurnFront(float direction)
     {

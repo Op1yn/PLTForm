@@ -6,9 +6,9 @@ public class EnemyStatePersecution : EnemyStateMovement
     private float _delayBetweenAttacks = 2.2f;
     private float _timeLastStrike = 0;
 
-    public EnemyStatePersecution(EnemyStateMachine stateMachine, Transform transform, float speed, EnemyFlipper enemyFlipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, transform, speed, enemyFlipper, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
+    public EnemyStatePersecution(EnemyStateMachine stateMachine, Transform transform, float speed, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
     {
-        _enemyAttackDetector = enemyAttackDetector;
+        EnemyAttackDetector = enemyAttackDetector;
     }
 
     public override void Enter(Transform T)
@@ -18,16 +18,18 @@ public class EnemyStatePersecution : EnemyStateMovement
 
     public override void Update()
     {
-        if (Mathf.Abs(Target.transform.position.x - _transform.position.x) > _distanceCeasePersecution)
-            _transform.position = Vector2.MoveTowards(_transform.position, new Vector2(Target.transform.position.x, _transform.position.y), _speed * Time.deltaTime);
+        if (Mathf.Abs(Target.transform.position.x - Transform.position.x) > _distanceCeasePersecution)
+            Transform.position = Vector2.MoveTowards(Transform.position, new Vector2(Target.transform.position.x, Transform.position.y), Speed * Time.deltaTime);
 
-        if (_enemyAttackDetector.TryGetPlayerHealthManager(out PlayerHealthManager playerHealthManager))
+        if (EnemyAttackDetector.TryGetPlayerHealthManager(out Health health))
         {
             if (_timeLastStrike + _delayBetweenAttacks < Time.time)
             {
                 _timeLastStrike = Time.time;
-                _enemyStateMachine.SetState<EnemyStateAttack>(playerHealthManager.transform);
+                EnemyStateMachine.SetState<EnemyStateAttack>(health.transform);
             }
         }
+
+        Flipper.TurnFront(Target.position.x - Transform.position.x);
     }
 }

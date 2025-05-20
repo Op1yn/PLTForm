@@ -3,29 +3,34 @@ using UnityEngine;
 
 public class PlayerAttackDetector : MonoBehaviour
 {
-    public List<IDamageable> CanTakeDamage { get; private set; }
+    private List<IDamageable> _attackedTargets;
 
     private void Start()
     {
-        CanTakeDamage = new List<IDamageable>();
+        _attackedTargets = new List<IDamageable>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            CanTakeDamage.Add(damageable);
+            _attackedTargets.Add(damageable);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
-            CanTakeDamage.Remove(damageable);
+            _attackedTargets.Remove(damageable);
+    }
+
+    public int GetAmountTargets()
+    {
+        return _attackedTargets.Count;
     }
 
     public IDamageable GetHealthManager(int Index)
     {
-        return CanTakeDamage[Index];
+        return _attackedTargets[Index];
     }
 }

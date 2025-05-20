@@ -6,7 +6,7 @@ public class EnemyStatePatrolling : EnemyStateMovement
     private List<Transform> _routePoints;
     private int _currentPoint = 0;
 
-    public EnemyStatePatrolling(EnemyStateMachine stateMachine, Transform transform, float speed, List<Transform> routePoints, EnemyFlipper enemyFlipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, transform, speed, enemyFlipper, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
+    public EnemyStatePatrolling(EnemyStateMachine stateMachine, Transform transform, float speed, List<Transform> routePoints, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
     {
         _routePoints = routePoints;
 
@@ -18,9 +18,9 @@ public class EnemyStatePatrolling : EnemyStateMovement
         if (HasPointReached())
             SwitchRoutePoint();
 
-        if (_enemyPersecutionManager.TryGetPlayerTransform(out Transform target))
+        if (EnemyPersecutionManager.TryGetPlayerTransform(out Transform target))
         {
-            _enemyStateMachine.SetState<EnemyStatePersecution>(target);
+            EnemyStateMachine.SetState<EnemyStatePersecution>(target);
 
             return;
         }
@@ -32,7 +32,7 @@ public class EnemyStatePatrolling : EnemyStateMovement
     private bool HasPointReached()
     {
         float pointDistanceReach = 0.2f;
-        Vector2 offset = _routePoints[_currentPoint].position - new Vector3(_transform.position.x, _transform.position.y);
+        Vector2 offset = _routePoints[_currentPoint].position - new Vector3(Transform.position.x, Transform.position.y);
 
         return offset.sqrMagnitude <= pointDistanceReach;
     }

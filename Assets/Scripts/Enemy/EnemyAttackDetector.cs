@@ -1,37 +1,37 @@
-using System;
 using UnityEngine;
 
 public class EnemyAttackDetector : MonoBehaviour
 {
+    private Health _health;
+
     public bool IsPlayerInAttackZone { get; private set; }
-    public PlayerHealthManager PlayerHealthManager { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<PlayerHealthManager>(out PlayerHealthManager playerHealthManager))
+        if (collision.gameObject.TryGetComponent<Health>(out Health health))
         {
-            PlayerHealthManager = playerHealthManager;
+            _health = health;
             IsPlayerInAttackZone = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<PlayerHealthManager>(out _))
+        if (collision.gameObject.TryGetComponent<Health>(out _))
         {
-            PlayerHealthManager = null;
+            _health = null;
             IsPlayerInAttackZone = false;
         }
     }
 
-    public bool TryGetPlayerHealthManager(out PlayerHealthManager playerHealthManager)
+    public bool TryGetPlayerHealthManager(out Health health)
     {
         bool hasPlayerDetected = false;
-        playerHealthManager = null;
+        health = null;
 
-        if (PlayerHealthManager != null)
+        if (_health != null)
         {
-            playerHealthManager = PlayerHealthManager;
+            health = _health;
             hasPlayerDetected = true;
         }
 

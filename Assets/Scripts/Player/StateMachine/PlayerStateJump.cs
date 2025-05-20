@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerStateJump : PlayerState
 {
     private PlayerMover _playerMover;
@@ -12,18 +10,18 @@ public class PlayerStateJump : PlayerState
     public override void Enter()
     {
         _playerMover.Jump();
-        PlayerAnimator.SetIsJumpingTrue();
+        PlayerAnimator.Jump();
         GroundDetector.Landed += SetStatePlayerStateIdle;
     }
 
     private void SetStatePlayerStateIdle()
     {
-        PlayerStateMachine.SetState<PlayerStateIdle>();
+        PlayerStateMachine.ChangeState<PlayerStateIdle>();
     }
 
     public override void Exit()
     {
-        PlayerAnimator.SetIsJumpingFalse();
+        PlayerAnimator.StopJump();
         GroundDetector.Landed -= SetStatePlayerStateIdle;
     }
 }
