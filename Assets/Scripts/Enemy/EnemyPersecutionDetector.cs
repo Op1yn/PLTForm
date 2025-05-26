@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class EnemyPersecutionDetector : MonoBehaviour
 {
+    public Action<Transform> PlayerDetected;
+
     private Transform _player;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -9,6 +12,7 @@ public class EnemyPersecutionDetector : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
             _player = collision.gameObject.transform;
+            PlayerDetected?.Invoke(player.transform);
         }
     }
 

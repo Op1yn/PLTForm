@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDamageDealer : MonoBehaviour
+public class EnemyDamageDealer : MonoBehaviour
 {
-    [SerializeField] private PlayerAnimator _animator;
+
+    [SerializeField] private EnemyAnimator _animator;
     [SerializeField] private AttackDetector _attackDetector;
     [SerializeField] private int _damage = 20;
 

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackDetector : MonoBehaviour
+public class AttackDetector : MonoBehaviour
 {
     private List<IDamageable> _attackedTargets;
+
+    public int CountTargets => _attackedTargets.Count;
 
     private void Start()
     {
@@ -24,13 +26,8 @@ public class PlayerAttackDetector : MonoBehaviour
             _attackedTargets.Remove(damageable);
     }
 
-    public int GetAmountTargets()
+    public List<IDamageable> GetAttackedTargets()
     {
-        return _attackedTargets.Count;
-    }
-
-    public IDamageable GetHealthManager(int Index)
-    {
-        return _attackedTargets[Index];
+        return new List<IDamageable>(_attackedTargets);
     }
 }

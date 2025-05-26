@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStateMachine
 {
-    private EnemyState CurrentState { get; set; }
+    private EnemyState _currentState;
     private Dictionary<Type, EnemyState> _states = new Dictionary<Type, EnemyState>();
 
     public void AddState(EnemyState _enemyState)
@@ -12,23 +12,23 @@ public class EnemyStateMachine
         _states.Add(_enemyState.GetType(), _enemyState);
     }
 
-    public void SetState<T>(Transform target) where T : EnemyState
+    public void ChangeState<T>(Transform target) where T : EnemyState
     {
         var type = typeof(T);
 
-        if (CurrentState != null && CurrentState.GetType() == type)
+        if (_currentState != null && _currentState.GetType() == type)
             return;
 
         if (_states.TryGetValue(type, out var newState))
         {
-            CurrentState?.Exit();
-            CurrentState = newState;
-            CurrentState.Enter(target);
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState.Enter(target);
         }
     }
 
     public void Update()
     {
-        CurrentState?.Update();
+        _currentState?.Update();
     }
 }

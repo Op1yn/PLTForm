@@ -4,7 +4,7 @@ public class PlayerStateMove : PlayerStateMovement
 {
     private Flipper _flipper;
 
-    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform, Flipper flipper) : base(playerStateMachine, playerMover, inputReader, groundDetector, playerAnimator, transform)
+    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform, Flipper flipper, Rigidbody2D rigidbody2D) : base(playerStateMachine, playerMover, inputReader, groundDetector, playerAnimator, transform, rigidbody2D)
     {
         _flipper = flipper;
     }

@@ -3,15 +3,13 @@ using UnityEngine;
 public abstract class EnemyState
 {
     protected readonly EnemyStateMachine EnemyStateMachine;
-    protected EnemyPersecutionDetector EnemyPersecutionManager;
-    protected EnemyAttackDetector EnemyAttackDetector;
+    protected EnemyPersecutionDetector EnemyPersecutionDetector;
     protected EnemyAnimator EnemyAnimator;
 
-    public EnemyState(EnemyStateMachine stateMachine, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator)
+    public EnemyState(EnemyStateMachine stateMachine, EnemyPersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector)
     {
         EnemyStateMachine = stateMachine;
-        EnemyPersecutionManager = enemyPersecutionManager;
-        EnemyAttackDetector = enemyAttackDetector;
+        EnemyPersecutionDetector = enemyPersecutionManager;
         EnemyAnimator = enemyAnimator;
     }
 

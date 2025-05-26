@@ -134,9 +134,9 @@ GameObject:
   - component: {fileID: 5000689000265414416}
   - component: {fileID: 3471378193059320005}
   - component: {fileID: 859629334858197270}
-  - component: {fileID: 5118223511021029579}
   - component: {fileID: 3294496896113591898}
   - component: {fileID: 2693268985955889192}
+  - component: {fileID: 3054676847163830194}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -254,7 +254,7 @@ MonoBehaviour:
   _speedX: 350
   _jumpForce: 18
   <InputReader>k__BackingField: {fileID: 859629334858197270}
-  <Rigidbody>k__BackingField: {fileID: 1363719377892852633}
+  <Rigidbody2D>k__BackingField: {fileID: 1363719377892852633}
   <PlayerAnimator>k__BackingField: {fileID: 8949679198474453341}
   <Flipper>k__BackingField: {fileID: 2693268985955889192}
 --- !u!114 &859629334858197270
@@ -269,21 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e704965c07d994aade6d9f14957b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5118223511021029579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419374913503134234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 653179354f2758f41a50478793c1d35a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 8949679198474453341}
-  _attackDetector: {fileID: 6895276874319025232}
-  _damage: 20
 --- !u!114 &3294496896113591898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3b41a134bf16043961abea09bf7a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maximumHealth: 200
-  _health: 100
+  _maximumHealthPoints: 200
+  _healthPoints: 100
 --- !u!114 &2693268985955889192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +295,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577d9faaeae0fa649836de68956225b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3054676847163830194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419374913503134234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653179354f2758f41a50478793c1d35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8949679198474453341}
+  _attackDetector: {fileID: 1800060764879737595}
+  _damage: 20
 --- !u!1 &3947310528254680501
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 64292242334421115}
   - component: {fileID: 3089838244094192716}
-  - component: {fileID: 6895276874319025232}
+  - component: {fileID: 1800060764879737595}
   m_Layer: 6
   m_Name: AttackZone
   m_TagString: Untagged
@@ -395,7 +395,7 @@ PolygonCollider2D:
       - {x: 0.39535034, y: -0.3388945}
       - {x: 0.4146677, y: 0.053394422}
   m_UseDelaunayMesh: 0
---- !u!114 &6895276874319025232
+--- !u!114 &1800060764879737595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3947310528254680501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d7c61d93c1ad344e9bace7ea2056a8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 383980264fa0cbc4ca447974fa63ba01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7114038052582731963

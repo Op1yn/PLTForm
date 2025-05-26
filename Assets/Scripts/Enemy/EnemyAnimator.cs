@@ -5,12 +5,13 @@ public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
+    public event Action CompletedStrike;
+
     public static readonly int IsAttack = Animator.StringToHash(nameof(IsAttack));
-    public event Action StruckWith;
    
     public void ReportAttack()
     {
-        StruckWith?.Invoke();
+        CompletedStrike?.Invoke();
     }
 
     public void StartAttackAnimation()

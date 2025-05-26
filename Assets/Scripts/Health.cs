@@ -2,30 +2,31 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int _maximumHealth;
-    [SerializeField] private int _health;
+    [SerializeField] private int _maximumHealthPoints;
+    [SerializeField] private int _healthPoints;
 
     public void TakeDamage(int damage)
     {
-        if (_health - damage > 0)
+        if (_healthPoints - damage > 0)
         {
-            _health -= damage;
+            _healthPoints -= damage;
         }
         else
         {
+            _healthPoints = 0;
             gameObject.SetActive(false);
         }
     }
 
     public void ReplenishHealth(int value)
     {
-        if (_health + value > _maximumHealth)
+        if (_healthPoints + value > _maximumHealthPoints)
         {
-            _health = _maximumHealth;
+            _healthPoints = _maximumHealthPoints;
         }
         else
         {
-            _health += value;
+            _healthPoints += value;
         }
     }
 }

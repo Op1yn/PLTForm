@@ -6,7 +6,7 @@ public class EnemyStateMovement : EnemyState
     public Transform Transform { get; private set; }
     public Flipper Flipper { get; private set; }
 
-    public EnemyStateMovement(EnemyStateMachine stateMachine, Transform transform, float speed, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
+    public EnemyStateMovement(EnemyStateMachine stateMachine, Transform transform, float speed, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector) : base(stateMachine, enemyPersecutionManager, enemyAnimator, attackDetector)
     {
         Transform = transform;
         Flipper = flipper;

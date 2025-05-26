@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyStatePatrolling : EnemyStateMovement
 {
     private List<Transform> _routePoints;
     private int _currentPoint = 0;
 
-    public EnemyStatePatrolling(EnemyStateMachine stateMachine, Transform transform, float speed, List<Transform> routePoints, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAttackDetector enemyAttackDetector, EnemyAnimator enemyAnimator) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAttackDetector, enemyAnimator)
+    public EnemyStatePatrolling(EnemyStateMachine stateMachine, Transform transform, float speed, List<Transform> routePoints, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAnimator, attackDetector)
     {
         _routePoints = routePoints;
-
         SetTarget(_routePoints[0]);
+        EnemyPersecutionDetector.PlayerDetected += EnterStateOfPersecution;
     }
 
     public override void Update()
@@ -18,16 +19,18 @@ public class EnemyStatePatrolling : EnemyStateMovement
         if (HasPointReached())
             SwitchRoutePoint();
 
-        if (EnemyPersecutionManager.TryGetPlayerTransform(out Transform target))
-        {
-            EnemyStateMachine.SetState<EnemyStatePersecution>(target);
-
-            return;
-        }
-
         base.Update();
     }
 
+    public override void Exit()
+    {
+        EnemyPersecutionDetector.PlayerDetected -= EnterStateOfPersecution;
+    }
+
+    private void EnterStateOfPersecution(Transform target)
+    {
+        EnemyStateMachine.ChangeState<EnemyStatePersecution>(target);
+    }
 
     private bool HasPointReached()
     {

@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public class PlayerStateIdle : PlayerState
 {
-    public PlayerStateIdle(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator) : base(playerStateMachine, inputReader, groundDetector, playerAnimator)
+    public PlayerStateIdle(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Rigidbody2D rigidbody2D) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D)
     {
     }
 
