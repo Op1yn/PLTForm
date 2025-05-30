@@ -10,10 +10,19 @@ public class EnemyStatePersecution : EnemyStateMovement
         _attackDetector = attackDetector;
     }
 
-    public override void Enter(Transform T)
+    public override void Enter()
     {
-        Debug.Log("Преследует");
-        SetTarget(T);
+        Debug.Log($"Преследование");
+        //if (EnemyPersecutionDetector.Player == null)
+        //{
+        //    EnterStateOfPatrolling();
+        //    //return;
+        //}
+
+        SetTarget(EnemyPersecutionDetector.Player);
+
+        EnemyPersecutionDetector.PlayerDisappeared += EnterStateOfPatrolling;
+        _attackDetector.AvailableTargetAdded += TryEnterStateOfAttack;
     }
 
     public override void Update()
@@ -21,11 +30,25 @@ public class EnemyStatePersecution : EnemyStateMovement
         if (Mathf.Abs(Target.transform.position.x - Transform.position.x) > _distanceCeasePersecution)
             Transform.position = Vector2.MoveTowards(Transform.position, new Vector2(Target.transform.position.x, Transform.position.y), Speed * Time.deltaTime);
 
-        if (_attackDetector.CountTargets > 0)
-        {
-            EnemyStateMachine.ChangeState<EnemyStateAttack>(Target);
-        }
-
         Flipper.TurnFront(Target.position.x - Transform.position.x);
+    }
+
+    public override void Exit()
+    {
+        EnemyPersecutionDetector.PlayerDisappeared -= EnterStateOfPatrolling;
+        _attackDetector.AvailableTargetAdded -= TryEnterStateOfAttack;
+    }
+
+    private void EnterStateOfPatrolling()
+    {
+        EnemyStateMachine.ChangeState<EnemyStatePatrolling>();
+    }
+
+    private void TryEnterStateOfAttack(GameObject gameObject)
+    {
+        if (gameObject.TryGetComponent<Player>(out Player _))
+        {
+            EnemyStateMachine.ChangeState<EnemyStateAttack>();
+        }
     }
 }

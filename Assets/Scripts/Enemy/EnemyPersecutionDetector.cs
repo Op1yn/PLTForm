@@ -3,30 +3,26 @@ using UnityEngine;
 
 public class EnemyPersecutionDetector : MonoBehaviour
 {
-    public Action<Transform> PlayerDetected;
+    public event Action PlayerDetected;
+    public event Action PlayerDisappeared;
 
-    private Transform _player;
+    public Transform Player { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            _player = collision.gameObject.transform;
-            PlayerDetected?.Invoke(player.transform);
+            Player = collision.gameObject.transform;
+            PlayerDetected?.Invoke();
         }
     }
 
-    public bool TryGetPlayerTransform(out Transform player)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        bool hasPlayerDetected = false;
-        player = null;
-
-        if (_player != null)
+        if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            player = _player;
-            hasPlayerDetected = true;
+            PlayerDisappeared?.Invoke();
+            Player = null;
         }
-
-        return hasPlayerDetected;
     }
 }

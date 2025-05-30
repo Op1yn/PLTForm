@@ -15,7 +15,7 @@ public abstract class EnemyState
 
     public Transform Target { get; private set; }
 
-    public virtual void Enter(Transform T) { }
+    public virtual void Enter() { }
     public virtual void Update() { }
     public virtual void Exit() { }
 

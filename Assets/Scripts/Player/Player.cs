@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public PlayerStateMachine PlayerStateMachine { get; private set; }
     public PlayerMover PlayerMover { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         PlayerMover = new PlayerMover(Rigidbody2D, _speedX, _jumpForce);
         PlayerStateMachine = new PlayerStateMachine();

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class EnemyStateMachine
 {
@@ -12,7 +11,7 @@ public class EnemyStateMachine
         _states.Add(_enemyState.GetType(), _enemyState);
     }
 
-    public void ChangeState<T>(Transform target) where T : EnemyState
+    public void ChangeState<T>() where T : EnemyState
     {
         var type = typeof(T);
 
@@ -23,7 +22,7 @@ public class EnemyStateMachine
         {
             _currentState?.Exit();
             _currentState = newState;
-            _currentState.Enter(target);
+            _currentState.Enter();
         }
     }
 

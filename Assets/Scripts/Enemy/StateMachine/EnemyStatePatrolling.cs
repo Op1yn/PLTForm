@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyStatePatrolling : EnemyStateMovement
 {
     private List<Transform> _routePoints;
-    private int _currentPoint = 0;
+    private int _currentPoint;
 
     public EnemyStatePatrolling(EnemyStateMachine stateMachine, Transform transform, float speed, List<Transform> routePoints, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAnimator, attackDetector)
     {
         _routePoints = routePoints;
-        SetTarget(_routePoints[0]);
+    }
+
+    public override void Enter()
+    {
+        Debug.Log("Патрулирование");
         EnemyPersecutionDetector.PlayerDetected += EnterStateOfPersecution;
+        _currentPoint = 0;
+        SetTarget(_routePoints[0]);
     }
 
     public override void Update()
@@ -27,9 +32,9 @@ public class EnemyStatePatrolling : EnemyStateMovement
         EnemyPersecutionDetector.PlayerDetected -= EnterStateOfPersecution;
     }
 
-    private void EnterStateOfPersecution(Transform target)
+    private void EnterStateOfPersecution()
     {
-        EnemyStateMachine.ChangeState<EnemyStatePersecution>(target);
+        EnemyStateMachine.ChangeState<EnemyStatePersecution>();
     }
 
     private bool HasPointReached()

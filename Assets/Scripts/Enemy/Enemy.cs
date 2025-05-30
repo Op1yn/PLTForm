@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         _enemyStateMachine.AddState(new EnemyStatePersecution(_enemyStateMachine, transform, _pursuitSpeed, _flipper, _enemyPersecutionManager, _enemyAnimator, _attackDetector));
         _enemyStateMachine.AddState(new EnemyStateAttack(_enemyStateMachine, _flipper, _enemyPersecutionManager, _enemyAnimator, _attackDetector));
 
-        _enemyStateMachine.ChangeState<EnemyStatePatrolling>(_routePoints[0]);
+        _enemyStateMachine.ChangeState<EnemyStatePatrolling>();
     }
 
     private void Update()
