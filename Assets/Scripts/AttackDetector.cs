@@ -18,7 +18,7 @@ public class AttackDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable _))
         {
             if (collision.TryGetComponent<Player>(out Player player))
             {
@@ -37,7 +37,7 @@ public class AttackDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable _))
         {
             if (collision.TryGetComponent<Player>(out Player player))
             {

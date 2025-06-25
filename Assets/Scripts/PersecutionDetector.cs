@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class PersecutionDetector : MonoBehaviour
 {
+    public List<Player> _playersPersecution;
+    private List<Enemy> _enemiesPersecution;
+
     public event Action TargetDetected;
     public event Action TargetDisappeared;
 
-    private List<IDamageable> _targetPersecution;
-    private List<Player> _playersPersecution;
-    private List<Enemy> _enemiesPersecution;
-
     private void Awake()
     {
-        _targetPersecution = new List<IDamageable>();
         _playersPersecution = new List<Player>();
         _enemiesPersecution = new List<Enemy>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable _))
         {
-            _targetPersecution.Add(target);
-
             if (collision.TryGetComponent<Player>(out Player player))
             {
                 _playersPersecution.Add(player);
@@ -39,10 +35,8 @@ public class PersecutionDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable _))
         {
-            _targetPersecution.Remove(target);
-
             if (collision.TryGetComponent<Player>(out Player player))
             {
                 _playersPersecution.Remove(player);
@@ -54,11 +48,6 @@ public class PersecutionDetector : MonoBehaviour
 
             TargetDisappeared?.Invoke();
         }
-    }
-
-    public List<IDamageable> GetTargetsInPersecutionZone()
-    {
-        return new List<IDamageable>(_targetPersecution);
     }
 
     public List<Player> GetPlayersInPersecutionZone()
