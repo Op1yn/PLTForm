@@ -4,36 +4,63 @@ using UnityEngine;
 
 public class AttackDetector : MonoBehaviour
 {
-    public Action<GameObject> AvailableTargetAdded;
-    public Action<GameObject> AvailableTargetRemoved;
+    public event Action AvailableTargetAdded;
+    public event Action AvailableTargetRemoved;
 
-    private List<IDamageable> _attackedTargets;
+    private List<Health> _attackedPlayers;
+    private List<Health> _attackedEnemies;
 
-    private void Awake()
+    private void Start()
     {
-        _attackedTargets = new List<IDamageable>();
+        _attackedPlayers = new List<Health>();
+        _attackedEnemies = new List<Health>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
         {
-            _attackedTargets.Add(damageable);
-            AvailableTargetAdded?.Invoke(collision.gameObject);
+            if (collision.TryGetComponent<Player>(out Player player))
+            {
+                if (player.TryGetComponent<Health>(out Health health))
+                    _attackedPlayers.Add(health);
+            }
+            else if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                if (enemy.TryGetComponent<Health>(out Health health))
+                    _attackedEnemies.Add(health);
+            }
+
+            AvailableTargetAdded?.Invoke();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
+        if (collision.TryGetComponent<IDamageable>(out IDamageable target))
         {
-            _attackedTargets.Remove(damageable);
-            AvailableTargetRemoved?.Invoke(collision.gameObject);
+            if (collision.TryGetComponent<Player>(out Player player))
+            {
+                if (player.TryGetComponent<Health>(out Health health))
+                    _attackedPlayers.Remove(health);
+            }
+            else if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                if (enemy.TryGetComponent<Health>(out Health health))
+                    _attackedEnemies.Remove(health);
+            }
+
+            AvailableTargetRemoved?.Invoke();
         }
     }
 
-    public List<IDamageable> GetAttackedTargets()
+    public List<Health> GetPlayersHealthInAttackZone()
     {
-        return new List<IDamageable>(_attackedTargets);
+        return new List<Health>(_attackedPlayers);
+    }
+
+    public List<Health> GetEnemiesHealthInAttackZone()
+    {
+        return new List<Health>(_attackedEnemies);
     }
 }

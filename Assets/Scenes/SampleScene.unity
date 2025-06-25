@@ -1515,6 +1515,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 271187141436926158, guid: 83d93f2ba961bfc4c9e035c22f38aeb5, type: 3}
   m_PrefabInstance: {fileID: 960169799}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &991230442 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6855612772533700468, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
+  m_PrefabInstance: {fileID: 1465798135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7622d72612c9783408351d2a721c8f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1021181547
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,7 +2114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761907673784446392, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3931309241839243184, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
       propertyPath: m_Enabled
@@ -6770,6 +6781,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5631431682430206790, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
+      propertyPath: _enemyDamageDealer
+      value: 
+      objectReference: {fileID: 991230442}
+    - target: {fileID: 5631431682430206790, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
       propertyPath: _routePoints.Array.data[0]
       value: 
       objectReference: {fileID: 1591170211}
@@ -7732,7 +7747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761907673784446392, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3931309241839243184, guid: a9e84719c8724984e815c4f606f4fb26, type: 3}
       propertyPath: m_Enabled

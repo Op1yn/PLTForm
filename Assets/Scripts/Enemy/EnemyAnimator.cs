@@ -10,8 +10,6 @@ public class EnemyAnimator : MonoBehaviour
 
     public static readonly int IsAttack = Animator.StringToHash(nameof(IsAttack));
 
-    public bool IsAttackAnimationPlaying { get; private set; }
-
     public void ReportAttack()
     {
         CompletedStrike?.Invoke();
@@ -19,7 +17,6 @@ public class EnemyAnimator : MonoBehaviour
 
     public void SetTrueAttackAnimation()
     {
-        IsAttackAnimationPlaying = true;
         _animator.SetBool(IsAttack, true);
     }
 
@@ -30,12 +27,6 @@ public class EnemyAnimator : MonoBehaviour
 
     public void InformAboutCompletionOfAttackAnimation()
     {
-        IsAttackAnimationPlaying = false;
         AttackAnimationEnded?.Invoke();
-    }
-
-    public bool GetIsAttack()
-    {
-        return _animator.GetBool(IsAttack);
     }
 }

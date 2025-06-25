@@ -129,8 +129,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5227860003390663935}
-  - component: {fileID: 8918485799885642363}
   - component: {fileID: 7054176025953463297}
+  - component: {fileID: 5952548732292063997}
   m_Layer: 7
   m_Name: VisibilityZone
   m_TagString: Untagged
@@ -153,18 +153,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4646851649583694699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8918485799885642363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2917721730306529541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db3d7a85a3eccfd44b293cfad1d83c86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &7054176025953463297
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -210,6 +198,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.32504, y: 3.3998203}
   m_EdgeRadius: 0
+--- !u!114 &5952548732292063997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917721730306529541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d241f0209aca046965dcb63a16a21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3761907673784446392
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,15 +324,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a11f4b369f65f48b5112243a2fd051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _patrolSpeed: 1.2
-  _pursuitSpeed: 4
+  _patrolSpeed: 2
+  _persecutionSpeed: 5
   _flipper: {fileID: 867904881516059119}
-  _enemyPersecutionManager: {fileID: 8918485799885642363}
   _routePoints:
   - {fileID: 0}
   - {fileID: 0}
-  _enemyAnimator: {fileID: 2416340565511263248}
   _attackDetector: {fileID: 4250504749945372822}
+  _persecutionDetector: {fileID: 5952548732292063997}
+  _enemyDamageDealer: {fileID: 6855612772533700468}
+  _enemyAnimator: {fileID: 2416340565511263248}
 --- !u!114 &7988808741476068140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7622d72612c9783408351d2a721c8f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 2416340565511263248}
   _attackDetector: {fileID: 4250504749945372822}
   _damage: 20
 --- !u!1 &6812457216881006234

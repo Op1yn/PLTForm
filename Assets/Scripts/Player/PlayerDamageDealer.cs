@@ -9,17 +9,17 @@ public class PlayerDamageDealer : MonoBehaviour
 
     private void OnEnable()
     {
-        _animator.CompletedStrike += TryInflictDamageTargets;
+        _animator.CompletedStrike += TryInflictDamageEnemies;
     }
 
     private void OnDisable()
     {
-        _animator.CompletedStrike -= TryInflictDamageTargets;
+        _animator.CompletedStrike -= TryInflictDamageEnemies;
     }
 
-    private void TryInflictDamageTargets()
+    private void TryInflictDamageEnemies()
     {
-        List<IDamageable> targets = _attackDetector.GetAttackedTargets();
+        List<Health> targets = _attackDetector.GetEnemiesHealthInAttackZone();
 
         for (int i = 0; i < targets.Count; i++)
         {

@@ -1,74 +1,75 @@
+using System.Collections.Generic;
 using UnityEngine;
-
 public class EnemyStateAttack : EnemyState
 {
-    //—делаю всЄ по другому. Ѕуду тут подписывать методы на событие завершени€ завершени€ анимации атаки.  аждый раз при завершении атаки будут делатьс€ попытки перейти в преследование и в патрулирование.
-    //ƒл€ этого во-первых методы должны быть строго взаимоисключающими, а во вторых об€зательно должны быть готовы все булевые дл€ перехода.
-    //ƒл€ перехода в преследование игрок должен быть вне зоны атаки, а дл€ перехода в патрулирование игрок ещЄ должен быть и вне зоны видени€. Ёто надо сделать вложенными »‘ами
+    private PersecutionDetector _persecutionDetector;
     private AttackDetector _attackDetector;
+    private EnemyDamageDealer _damageDealer;
 
-    public EnemyStateAttack(EnemyStateMachine stateMachine, Flipper flipper, EnemyPersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector) : base(stateMachine, enemyPersecutionManager, enemyAnimator, attackDetector)
+    public EnemyStateAttack(EnemyStateMachine stateMachine, Flipper flipper, PersecutionDetector persecutionDetector, EnemyAnimator animator, AttackDetector attackDetector, EnemyDamageDealer damageDealer) : base(stateMachine, persecutionDetector, animator, attackDetector)
     {
+        _persecutionDetector = persecutionDetector;
         _attackDetector = attackDetector;
+        _damageDealer = damageDealer;
     }
 
     public override void Enter()
     {
-        Debug.Log("јтака");
-        EnemyAnimator.SetTrueAttackAnimation();
-        _attackDetector.AvailableTargetRemoved += TruSetFalseIsAttackAnimation;
-        _attackDetector.AvailableTargetAdded += TruSetTrueAttackAnimation;
-        EnemyAnimator.AttackAnimationEnded += TryEnterToPersecutionState;
-        EnemyPersecutionDetector.PlayerDisappeared += TruEnterToPatrollingState;
+        Animator.SetTrueAttackAnimation();
+
+        Animator.CompletedStrike += DealDamageToPlayersInAttackZone;
+        _attackDetector.AvailableTargetAdded += SetTrueAttackAnimation;
+        _attackDetector.AvailableTargetRemoved += TrySetFalseAttackAnimation;
+        Animator.AttackAnimationEnded += TryChangeState;
     }
 
     public override void Exit()
     {
-        Debug.Log("1");
-        _attackDetector.AvailableTargetRemoved -= TruSetFalseIsAttackAnimation;
-        _attackDetector.AvailableTargetAdded -= TruSetTrueAttackAnimation;
-        EnemyAnimator.AttackAnimationEnded -= TryEnterToPersecutionState;
-        EnemyPersecutionDetector.PlayerDisappeared -= TruEnterToPatrollingState;
+        Animator.CompletedStrike -= DealDamageToPlayersInAttackZone;
+        _attackDetector.AvailableTargetAdded -= SetTrueAttackAnimation;
+        _attackDetector.AvailableTargetRemoved -= TrySetFalseAttackAnimation;
+        Animator.AttackAnimationEnded -= TryChangeState;
     }
 
-    private void TryEnterToPersecutionState()
+    private void DealDamageToPlayersInAttackZone()
     {
-        Debug.Log("2");
-        if (EnemyAnimator.GetIsAttack() == false)
+        List<IDamageable> targets = new List<IDamageable>();
+
+        foreach (IDamageable target in _attackDetector.GetPlayersHealthInAttackZone())
         {
-            Debug.Log("22");
-            EnemyStateMachine.ChangeState<EnemyStatePersecution>();
+            targets.Add(target);
+        }
+
+        _damageDealer.DealDamageToTargets(targets);
+    }
+
+    private void TrySetFalseAttackAnimation()
+    {
+        if (_attackDetector.GetPlayersHealthInAttackZone().Count == 0)
+        {
+            Animator.SetFalseAttackAnimation();
         }
     }
 
-    private void TruEnterToPatrollingState()
+    private void SetTrueAttackAnimation()
     {
-        Debug.Log($"3 { EnemyAnimator.IsAttackAnimationPlaying}");
-
-        if (EnemyAnimator.IsAttackAnimationPlaying == false)//Ќужно провер€ть не булевую IsAttack, а переходить при условии, что сработало событие завершени€ атаки.  ак вариант в AttackDetector можно сделать булевую котора€ будет true в методе SetTrueAttackAnimation, а false в методе InformAboutCompletionOfAttackAnimation
-        {
-            Debug.Log("33");
-            EnemyStateMachine.ChangeState<EnemyStatePatrolling>();
-        }
+        Animator.SetTrueAttackAnimation();
     }
 
-    private void TruSetTrueAttackAnimation(GameObject gameObject)
+    private void TryChangeState()
     {
-        Debug.Log("4");
-        if (gameObject.TryGetComponent<Player>(out Player _))
+        if (_attackDetector.GetPlayersHealthInAttackZone().Count == 0)
         {
-            Debug.Log("44");
-            EnemyAnimator.SetTrueAttackAnimation();
-        }
-    }
-
-    private void TruSetFalseIsAttackAnimation(GameObject gameObject)
-    {
-        Debug.Log("5");
-        if (gameObject.TryGetComponent<Player>(out Player _))
-        {
-            Debug.Log("55");
-            EnemyAnimator.SetFalseAttackAnimation();
+            if (_persecutionDetector.GetPlayersInPersecutionZone().Count > 0)
+            {
+                StateMachine.ChangeState<EnemyStatePersecution>();
+                return;
+            }
+            else
+            {
+                StateMachine.ChangeState<EnemyStatePatrolling>();
+                return;
+            }
         }
     }
 }
