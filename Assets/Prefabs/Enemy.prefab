@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d241f0209aca046965dcb63a16a21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playersPersecution: []
 --- !u!1 &3761907673784446392
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,8 +224,8 @@ GameObject:
   - component: {fileID: 6284677633758489620}
   - component: {fileID: 5631431682430206790}
   - component: {fileID: 7988808741476068140}
-  - component: {fileID: 867904881516059119}
   - component: {fileID: 6855612772533700468}
+  - component: {fileID: 422577146754049923}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _patrolSpeed: 2
   _persecutionSpeed: 5
-  _flipper: {fileID: 867904881516059119}
+  _flipper: {fileID: 422577146754049923}
   _routePoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -348,18 +349,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maximumHealthPoints: 100
   _healthPoints: 50
---- !u!114 &867904881516059119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3761907673784446392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 577d9faaeae0fa649836de68956225b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6855612772533700468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +363,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDetector: {fileID: 4250504749945372822}
   _damage: 20
+--- !u!114 &422577146754049923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3761907673784446392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577d9faaeae0fa649836de68956225b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6812457216881006234
 GameObject:
   m_ObjectHideFlags: 0
