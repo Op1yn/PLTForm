@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using UnityEngine;
+
 public class EnemyStateAttack : EnemyState
 {
-    private PersecutionDetector _persecutionDetector;
-    private AttackDetector _attackDetector;
+    private EnemyDetector _persecutionDetector;
+    private EnemyDetector _attackDetector;
     private EnemyDamageDealer _damageDealer;
 
-    public EnemyStateAttack(EnemyStateMachine stateMachine, Flipper flipper, PersecutionDetector persecutionDetector, EnemyAnimator animator, AttackDetector attackDetector, EnemyDamageDealer damageDealer) : base(stateMachine, persecutionDetector, animator, attackDetector)
+    public EnemyStateAttack(EnemyStateMachine stateMachine, Flipper flipper, EnemyDetector persecutionDetector, EnemyAnimator animator, EnemyDetector attackDetector, EnemyDamageDealer damageDealer) : base(stateMachine, persecutionDetector, animator, attackDetector)
     {
         _persecutionDetector = persecutionDetector;
         _attackDetector = attackDetector;
@@ -35,7 +35,7 @@ public class EnemyStateAttack : EnemyState
     {
         List<IDamageable> targets = new List<IDamageable>();
 
-        foreach (IDamageable target in _attackDetector.GetPlayersHealthInAttackZone())
+        foreach (IDamageable target in _attackDetector.Targets)
         {
             targets.Add(target);
         }
@@ -45,7 +45,7 @@ public class EnemyStateAttack : EnemyState
 
     private void TrySetFalseAttackAnimation()
     {
-        if (_attackDetector.GetPlayersHealthInAttackZone().Count == 0)
+        if (_attackDetector.Targets.Count == 0)
         {
             Animator.SetFalseAttackAnimation();
         }
@@ -58,9 +58,9 @@ public class EnemyStateAttack : EnemyState
 
     private void TryChangeState()
     {
-        if (_attackDetector.GetPlayersHealthInAttackZone().Count == 0)
+        if (_attackDetector.Targets.Count == 0)
         {
-            if (_persecutionDetector.GetPlayersInPersecutionZone().Count > 0)
+            if (_persecutionDetector.Targets.Count > 0)
             {
                 StateMachine.ChangeState<EnemyStatePersecution>();
                 return;

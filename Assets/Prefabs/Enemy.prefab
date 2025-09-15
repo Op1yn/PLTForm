@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5227860003390663935}
   - component: {fileID: 7054176025953463297}
-  - component: {fileID: 5952548732292063997}
+  - component: {fileID: 5070881137979489099}
   m_Layer: 7
   m_Name: VisibilityZone
   m_TagString: Untagged
@@ -198,7 +198,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.32504, y: 3.3998203}
   m_EdgeRadius: 0
---- !u!114 &5952548732292063997
+--- !u!114 &5070881137979489099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,10 +207,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2917721730306529541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d241f0209aca046965dcb63a16a21c, type: 3}
+  m_Script: {fileID: 11500000, guid: c507e6ead053bd8458e15870d32591f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playersPersecution: []
 --- !u!1 &3761907673784446392
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,8 +330,8 @@ MonoBehaviour:
   _routePoints:
   - {fileID: 0}
   - {fileID: 0}
-  _attackDetector: {fileID: 4250504749945372822}
-  _persecutionDetector: {fileID: 5952548732292063997}
+  _attackDetector: {fileID: 5327321718289274399}
+  _persecutionDetector: {fileID: 5070881137979489099}
   _enemyDamageDealer: {fileID: 6855612772533700468}
   _enemyAnimator: {fileID: 2416340565511263248}
 --- !u!114 &7988808741476068140
@@ -361,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7622d72612c9783408351d2a721c8f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDetector: {fileID: 4250504749945372822}
+  _attackDetector: {fileID: 5327321718289274399}
   _damage: 20
 --- !u!114 &422577146754049923
 MonoBehaviour:
@@ -385,7 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2718351590128620445}
   - component: {fileID: 6781402397129947952}
-  - component: {fileID: 4250504749945372822}
+  - component: {fileID: 5327321718289274399}
   m_Layer: 7
   m_Name: AttackZone
   m_TagString: Untagged
@@ -443,7 +442,7 @@ CircleCollider2D:
   m_Offset: {x: 0.4, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &4250504749945372822
+--- !u!114 &5327321718289274399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -452,6 +451,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6812457216881006234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383980264fa0cbc4ca447974fa63ba01, type: 3}
+  m_Script: {fileID: 11500000, guid: c507e6ead053bd8458e15870d32591f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class EnemyStatePersecution : EnemyStateMovement
 {
-    private float _distanceCeasePersecution = 1.2f;
-    private List<Player> _playersInZoneVisible;
-    private AttackDetector _attackDetector;
+    //private float _distanceCeasePersecution = 1.2f;
+    //private IReadOnlyList<Health> _playersInZoneVisible;
+    private EnemyDetector _attackDetector;
+    private float _speedCoefficientPersecution;
+    private Follower _follower;
 
-    public EnemyStatePersecution(EnemyStateMachine stateMachine, Transform transform, float speed, Flipper flipper, PersecutionDetector enemyPersecutionManager, EnemyAnimator enemyAnimator, AttackDetector attackDetector) : base(stateMachine, transform, speed, flipper, enemyPersecutionManager, enemyAnimator, attackDetector)
+    public EnemyStatePersecution(EnemyStateMachine stateMachine, Transform transform, Flipper flipper, EnemyDetector persecutionDetector, EnemyAnimator enemyAnimator, EnemyDetector attackDetector, EnemyMover enemyMover, float speedCoefficientPersecution, Follower follower) : base(stateMachine, transform, flipper, persecutionDetector, enemyAnimator, attackDetector, enemyMover)
     {
-        _playersInZoneVisible = new List<Player>();
+        _follower = follower;
+        //_playersInZoneVisible = new List<Health>();
         _attackDetector = attackDetector;
+        _speedCoefficientPersecution = speedCoefficientPersecution;
     }
 
     public override void Enter()
     {
-        _playersInZoneVisible = PersecutionDetector.GetPlayersInPersecutionZone();
-        SetTargetToMoveTowards(_playersInZoneVisible[0].transform);
-        PersecutionDetector.TargetDetected += UpdateListPlayersInZoneOfVisibility;
-        PersecutionDetector.TargetDisappeared += UpdateListPlayersInZoneOfVisibility;
+        EnemyMover.SetTargetToMoveTowards(PersecutionDetector.Targets[0].transform);
+        EnemyMover.SetSpeedCoefficient(_speedCoefficientPersecution);
+
+
+        //_playersInZoneVisible = PersecutionDetector.Targets;
+        PersecutionDetector.AvailableTargetAdded += UpdateListPlayersInZoneOfVisibility;
+        PersecutionDetector.AvailableTargetRemoved += UpdateListPlayersInZoneOfVisibility;
         _attackDetector.AvailableTargetAdded += TryEnterStateOfPatrolling;
     }
 
@@ -27,12 +34,12 @@ public class EnemyStatePersecution : EnemyStateMovement
     {
         if (_playersInZoneVisible.Count > 0)
         {
-            SetTargetToMoveTowards(GetNearestPlayerInVisibleZone().transform);
+            EnemyMover.SetTargetToMoveTowards(_follower.GetNearestPlayerInVisibleZone().transform);
 
-            Flipper.TurnFront(TargetToMoveTowards.position.x - Transform.position.x);
+            Flipper.TurnFront(EnemyMover.TargetToMoveTowards.position.x - Transform.position.x);
 
-            if (Mathf.Abs(TargetToMoveTowards.transform.position.x - Transform.position.x) > _distanceCeasePersecution)
-                Move();
+            if (Mathf.Abs(EnemyMover.TargetToMoveTowards.transform.position.x - Transform.position.x) > _distanceCeasePersecution)
+                EnemyMover.Move();
         }
         else
         {
@@ -42,31 +49,26 @@ public class EnemyStatePersecution : EnemyStateMovement
 
     public override void Exit()
     {
-        PersecutionDetector.TargetDetected -= UpdateListPlayersInZoneOfVisibility;
-        PersecutionDetector.TargetDisappeared -= UpdateListPlayersInZoneOfVisibility;
+        PersecutionDetector.AvailableTargetAdded -= UpdateListPlayersInZoneOfVisibility;
+        PersecutionDetector.AvailableTargetRemoved -= UpdateListPlayersInZoneOfVisibility;
         _attackDetector.AvailableTargetAdded -= TryEnterStateOfPatrolling;
     }
 
-    public override void Move()
-    {
-        Transform.position = Vector2.MoveTowards(Transform.position, new Vector2(TargetToMoveTowards.transform.position.x, Transform.position.y), Speed * Time.deltaTime);
-    }
+    //private Health GetNearestPlayerInVisibleZone()
+    //{
+    //    List<Health> playersByDistanceEnemy = new List<Health>(_playersInZoneVisible.OrderBy(p => Mathf.Abs(p.transform.position.x - Transform.position.x)));
 
-    private Player GetNearestPlayerInVisibleZone()
-    {
-        List<Player> playersByDistanceEnemy = new List<Player>(_playersInZoneVisible.OrderBy(p => Mathf.Abs(p.transform.position.x - Transform.position.x)));
+    //    return playersByDistanceEnemy[0];
+    //}
 
-        return playersByDistanceEnemy[0];
-    }
-
-    private void UpdateListPlayersInZoneOfVisibility()
-    {
-        _playersInZoneVisible = PersecutionDetector.GetPlayersInPersecutionZone();
-    }
+    //private void UpdateListPlayersInZoneOfVisibility()
+    //{
+    //    _playersInZoneVisible = PersecutionDetector.Targets;
+    //}
 
     private void TryEnterStateOfPatrolling()
     {
-        if (_attackDetector.GetPlayersHealthInAttackZone().Count > 0)
+        if (_attackDetector.Targets.Count > 0)
         {
             StateMachine.ChangeState<EnemyStateAttack>();
         }

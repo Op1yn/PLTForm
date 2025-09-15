@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyDamageDealer : MonoBehaviour
 {
-    [SerializeField] private AttackDetector _attackDetector;
+    [SerializeField] private EnemyDetector _attackDetector;
     [SerializeField] private int _damage = 20;
 
     public void DealDamageToTargets(List<IDamageable> targets)

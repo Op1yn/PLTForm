@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 8949679198474453341}
-  _attackDetector: {fileID: 1800060764879737595}
+  _attackDetector: {fileID: 1746425803944750496}
   _damage: 20
 --- !u!1 &3947310528254680501
 GameObject:
@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 64292242334421115}
   - component: {fileID: 3089838244094192716}
-  - component: {fileID: 1800060764879737595}
+  - component: {fileID: 1746425803944750496}
   m_Layer: 6
   m_Name: AttackZone
   m_TagString: Untagged
@@ -395,7 +395,7 @@ PolygonCollider2D:
       - {x: 0.39535034, y: -0.3388945}
       - {x: 0.4146677, y: 0.053394422}
   m_UseDelaunayMesh: 0
---- !u!114 &1800060764879737595
+--- !u!114 &1746425803944750496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3947310528254680501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383980264fa0cbc4ca447974fa63ba01, type: 3}
+  m_Script: {fileID: 11500000, guid: c1660ded2bc8ee84aa2517ba145fa48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7114038052582731963
