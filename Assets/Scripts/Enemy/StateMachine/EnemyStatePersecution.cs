@@ -7,6 +7,7 @@ public class EnemyStatePersecution : EnemyStateMovement
     //private float _distanceCeasePersecution = 1.2f;
     //private IReadOnlyList<Health> _playersInZoneVisible;
     private EnemyDetector _attackDetector;
+    private EnemyDetector _persecutionDetector;
     private float _speedCoefficientPersecution;
     private Follower _follower;
 
@@ -15,6 +16,7 @@ public class EnemyStatePersecution : EnemyStateMovement
         _follower = follower;
         //_playersInZoneVisible = new List<Health>();
         _attackDetector = attackDetector;
+        _persecutionDetector = persecutionDetector;
         _speedCoefficientPersecution = speedCoefficientPersecution;
     }
 
@@ -32,14 +34,11 @@ public class EnemyStatePersecution : EnemyStateMovement
 
     public override void Update()
     {
-        if (_playersInZoneVisible.Count > 0)
+        if (_persecutionDetector.Targets.Count > 1)// единицу заменить на переменную
         {
-            EnemyMover.SetTargetToMoveTowards(_follower.GetNearestPlayerInVisibleZone().transform);
+            _follower.SetTargetForPersecution();
 
-            Flipper.TurnFront(EnemyMover.TargetToMoveTowards.position.x - Transform.position.x);
-
-            if (Mathf.Abs(EnemyMover.TargetToMoveTowards.transform.position.x - Transform.position.x) > _distanceCeasePersecution)
-                EnemyMover.Move();
+            
         }
         else
         {

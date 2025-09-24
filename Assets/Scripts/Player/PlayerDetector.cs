@@ -1,3 +1,3 @@
-public class PlayerDetector : Detector<Health>
-{   
+public class PlayerDetector : Detector<Enemy>
+{
 }

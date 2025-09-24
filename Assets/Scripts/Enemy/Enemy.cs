@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _patrolSpeed = 2f;
-    [SerializeField] private float _speedCoefficientPersecution = 1;
+    [SerializeField] private float _patrolSpeed = 1f;
+    [SerializeField] private float _speedCoefficientPersecution = 2;
     [SerializeField] private Flipper _flipper;
     [SerializeField] private List<Transform> _routePoints;
     [SerializeField] private EnemyDetector _attackDetector;

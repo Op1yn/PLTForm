@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Detector<T> : MonoBehaviour where T : IDamageable
+public class Detector<T> : MonoBehaviour where T : MonoBehaviour
 {
     private List<T> _targets;
 
@@ -35,5 +36,12 @@ public class Detector<T> : MonoBehaviour where T : IDamageable
             _targets.Remove(target);
 
         AvailableTargetRemoved?.Invoke();
+    }
+
+    public T GetNearestTarget()
+    {
+        List<T> targetsOrderedByDistance = new List<T>(_targets.OrderBy(p => Mathf.Abs(p.transform.position.x - transform.position.x)));
+
+        return targetsOrderedByDistance[0];
     }
 }
