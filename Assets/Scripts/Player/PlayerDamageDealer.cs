@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerDamageDealer : MonoBehaviour
 {
     [SerializeField] private PlayerAnimator _animator;
-    [SerializeField] private PlayerDetector _attackDetector;
+    [SerializeField] private EnemiesDetectionDetector _attackDetector;
     [SerializeField] private int _damage = 20;
 
     private void OnEnable()
@@ -19,11 +19,12 @@ public class PlayerDamageDealer : MonoBehaviour
 
     private void TryInflictDamageEnemies()
     {
-        IReadOnlyList<Health> targets = _attackDetector.Targets;
+        IReadOnlyList<Enemy> targets = _attackDetector.Targets;
 
         for (int i = 0; i < targets.Count; i++)
         {
-            targets[i].TakeDamage(_damage);
+            if (targets[i].TryGetComponent<Health>(out Health targetHealth))
+                targetHealth.TakeDamage(_damage);
         }
     }
 }

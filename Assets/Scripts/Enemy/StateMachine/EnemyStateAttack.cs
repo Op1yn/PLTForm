@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-
 public class EnemyStateAttack : EnemyState
 {
-    private EnemyDetector _persecutionDetector;
-    private EnemyDetector _attackDetector;
+    private PlayerDetectionDetector _persecutionDetector;
+    private PlayerDetectionDetector _attackDetector;
     private EnemyDamageDealer _damageDealer;
 
-    public EnemyStateAttack(EnemyStateMachine stateMachine, Flipper flipper, EnemyDetector persecutionDetector, EnemyAnimator animator, EnemyDetector attackDetector, EnemyDamageDealer damageDealer) : base(stateMachine, persecutionDetector, animator, attackDetector)
+    public EnemyStateAttack(EnemyStateMachine stateMachine, EnemyAnimator animator, PlayerDetectionDetector persecutionDetector, PlayerDetectionDetector attackDetector, EnemyDamageDealer damageDealer) : base(stateMachine, animator, persecutionDetector)
     {
         _persecutionDetector = persecutionDetector;
         _attackDetector = attackDetector;
@@ -17,57 +15,32 @@ public class EnemyStateAttack : EnemyState
     {
         Animator.SetTrueAttackAnimation();
 
-        Animator.CompletedStrike += DealDamageToPlayersInAttackZone;
-        _attackDetector.AvailableTargetAdded += SetTrueAttackAnimation;
-        _attackDetector.AvailableTargetRemoved += TrySetFalseAttackAnimation;
+        Animator.CompletedStrike += _damageDealer.TryDamagePlayer;
+        _attackDetector.PlayerEnteredAffectedArea += Animator.SetTrueAttackAnimation;
+        _attackDetector.PlayerLeftAffectedArea += Animator.SetFalseAttackAnimation;
         Animator.AttackAnimationEnded += TryChangeState;
     }
 
     public override void Exit()
     {
-        Animator.CompletedStrike -= DealDamageToPlayersInAttackZone;
-        _attackDetector.AvailableTargetAdded -= SetTrueAttackAnimation;
-        _attackDetector.AvailableTargetRemoved -= TrySetFalseAttackAnimation;
+        Animator.CompletedStrike -= _damageDealer.TryDamagePlayer;
+        _attackDetector.PlayerEnteredAffectedArea -= Animator.SetTrueAttackAnimation;
+        _attackDetector.PlayerLeftAffectedArea -= Animator.SetFalseAttackAnimation;
         Animator.AttackAnimationEnded -= TryChangeState;
-    }
-
-    private void DealDamageToPlayersInAttackZone()
-    {
-        List<IDamageable> targets = new List<IDamageable>();
-
-        foreach (IDamageable target in _attackDetector.Targets)
-        {
-            targets.Add(target);
-        }
-
-        _damageDealer.DealDamageToTargets(targets);
-    }
-
-    private void TrySetFalseAttackAnimation()
-    {
-        if (_attackDetector.Targets.Count == 0)
-        {
-            Animator.SetFalseAttackAnimation();
-        }
-    }
-
-    private void SetTrueAttackAnimation()
-    {
-        Animator.SetTrueAttackAnimation();
     }
 
     private void TryChangeState()
     {
-        if (_attackDetector.Targets.Count == 0)
+        if (_attackDetector.Player == null)
         {
-            if (_persecutionDetector.Targets.Count > 0)
+            if (_persecutionDetector.Player == null)
             {
-                StateMachine.ChangeState<EnemyStatePersecution>();
+                StateMachine.ChangeState<EnemyStatePatrolling>();
                 return;
             }
             else
             {
-                StateMachine.ChangeState<EnemyStatePatrolling>();
+                StateMachine.ChangeState<EnemyStatePersecution>();
                 return;
             }
         }

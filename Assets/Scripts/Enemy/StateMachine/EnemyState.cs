@@ -2,11 +2,13 @@ public abstract class EnemyState
 {
     public EnemyStateMachine StateMachine { get; private set; }
     public EnemyAnimator Animator { get; private set; }
+    public PlayerDetectionDetector PersecutionDetector { get; private set; }
 
-    public EnemyState(EnemyStateMachine stateMachine, EnemyDetector enemyPersecutionDetector, EnemyAnimator enemyAnimator, EnemyDetector attackDetector)
+    public EnemyState(EnemyStateMachine stateMachine, EnemyAnimator animator, PlayerDetectionDetector persecutionDetector)
     {
         StateMachine = stateMachine;
-        Animator = enemyAnimator;
+        Animator = animator;
+        PersecutionDetector = persecutionDetector;
     }
 
     public virtual void Enter() { }

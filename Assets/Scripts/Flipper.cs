@@ -1,19 +1,37 @@
 using UnityEngine;
 
-public class Flipper : MonoBehaviour
+public class Flipper
 {
+    private Transform _transform;
     private int _positiveRotationY = 0;
     private int _negativeRotationY = -180;
 
-    public void TurnFront(float direction)
+    public Flipper(Transform transform)
     {
-        if (Mathf.Sign(direction) > 0)
+        _transform = transform;
+    }
+
+    public void TurnFrontTowardsTarget(Transform targetTransform)
+    {
+        if (Mathf.Sign(targetTransform.position.x - _transform.position.x) > 0)
         {
-            transform.rotation = Quaternion.Euler(new Vector2(0, _positiveRotationY));
+            _transform.rotation = Quaternion.Euler(new Vector2(0, _positiveRotationY));
         }
         else
         {
-            transform.rotation = Quaternion.Euler(new Vector2(0, _negativeRotationY));
+            _transform.rotation = Quaternion.Euler(new Vector2(0, _negativeRotationY));
+        }
+    }
+
+    public void TurnFrontSelectedDirection(float direction)
+    {
+        if (Mathf.Sign(direction) > 0)
+        {
+            _transform.rotation = Quaternion.Euler(new Vector2(0, _positiveRotationY));
+        }
+        else
+        {
+            _transform.rotation = Quaternion.Euler(new Vector2(0, _negativeRotationY));
         }
     }
 }

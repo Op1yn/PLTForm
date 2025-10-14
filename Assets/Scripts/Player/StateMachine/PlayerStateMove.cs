@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerStateMove : PlayerStateMovement
+public class PlayerStateMove : PlayerState
 {
-    private Flipper _flipper;
-
-    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform, Flipper flipper, Rigidbody2D rigidbody2D) : base(playerStateMachine, playerMover, inputReader, groundDetector, playerAnimator, transform, rigidbody2D)
+    public PlayerStateMove(PlayerStateMachine playerStateMachine, PlayerMover playerMover, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Transform transform, Flipper flipper, Rigidbody2D rigidbody2D, Flipper flipper1) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D, flipper)
     {
-        _flipper = flipper;
+        PlayerMover = playerMover;
     }
+
+    public PlayerMover PlayerMover { get; private set; }
 
     public override void Enter()
     {
@@ -17,7 +17,7 @@ public class PlayerStateMove : PlayerStateMovement
 
     public override void Update()
     {
-        _flipper.TurnFront(InputReader.Direction);
+        Flipper.TurnFrontSelectedDirection(InputReader.Direction);
     }
 
     public override void Exit()
@@ -30,7 +30,9 @@ public class PlayerStateMove : PlayerStateMovement
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        PlayerMover.Move(InputReader.Direction);
+
+        PlayerMover.SetDirection(InputReader.Direction);
+        PlayerMover.Move();
 
         if (InputReader.Direction == 0)
         {

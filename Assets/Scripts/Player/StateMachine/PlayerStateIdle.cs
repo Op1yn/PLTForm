@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerStateIdle : PlayerState
 {
-    public PlayerStateIdle(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Rigidbody2D rigidbody2D) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D)
+    public PlayerStateIdle(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, Rigidbody2D rigidbody2D, Flipper flipper) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D, flipper)
     {
     }
 
-    public override void Exit()
+    public override void Enter()
     {
-        InputReader.JumpingButtonPressed -= TrySetJumpState;
-        InputReader.AttackButtonPressed -= TrySetAttackState;
+        InputReader.JumpingButtonPressed += TrySetJumpState;
+        InputReader.AttackButtonPressed += TrySetAttackState;
     }
 
     public override void Update()
@@ -18,12 +18,16 @@ public class PlayerStateIdle : PlayerState
         {
             PlayerStateMachine.ChangeState<PlayerStateMove>();
         }
+        else
+        {
+            Flipper.TurnFrontSelectedDirection(InputReader.LastDirectionOfMoving);
+        }
     }
 
-    public override void Enter()
+    public override void Exit()
     {
-        InputReader.JumpingButtonPressed += TrySetJumpState;
-        InputReader.AttackButtonPressed += TrySetAttackState;
+        InputReader.JumpingButtonPressed -= TrySetJumpState;
+        InputReader.AttackButtonPressed -= TrySetAttackState;
     }
 
     private void TrySetJumpState()

@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class PlayerMover
+public class PlayerMover : IMoving
 {
     private float _speedX;
     private float _jumpForce;
+    private float _direction;
 
     private Rigidbody2D _rigidbody;
 
@@ -14,13 +15,23 @@ public class PlayerMover
         _jumpForce = lumpForce;
     }
 
-    public void Move(float direction)
+    public void Move()
     {
-        _rigidbody.velocity = new Vector2(_speedX * direction * Time.fixedDeltaTime, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(_speedX * _direction * Time.fixedDeltaTime, _rigidbody.velocity.y);
+    }
+
+    public void SetDirection(float direction)
+    {
+        _direction = direction;
     }
 
     public void Jump()
     {
         _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+    }
+
+    public void LandingStop()
+    {
+        _rigidbody.velocity = new Vector2(0, 0);
     }
 }

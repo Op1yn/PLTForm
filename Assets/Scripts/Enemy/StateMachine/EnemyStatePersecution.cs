@@ -1,73 +1,39 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-
-public class EnemyStatePersecution : EnemyStateMovement
+public class EnemyStatePersecution : EnemyStateMovement<Follower>
 {
-    //private float _distanceCeasePersecution = 1.2f;
-    //private IReadOnlyList<Health> _playersInZoneVisible;
-    private EnemyDetector _attackDetector;
-    private EnemyDetector _persecutionDetector;
-    private float _speedCoefficientPersecution;
-    private Follower _follower;
+    private PlayerDetectionDetector _attackDetector;
 
-    public EnemyStatePersecution(EnemyStateMachine stateMachine, Transform transform, Flipper flipper, EnemyDetector persecutionDetector, EnemyAnimator enemyAnimator, EnemyDetector attackDetector, EnemyMover enemyMover, float speedCoefficientPersecution, Follower follower) : base(stateMachine, transform, flipper, persecutionDetector, enemyAnimator, attackDetector, enemyMover)
+    public EnemyStatePersecution(EnemyStateMachine stateMachine, EnemyAnimator animator, PlayerDetectionDetector persecutionDetector, Follower mover, Flipper flipper, PlayerDetectionDetector attackDetector) : base(stateMachine, animator, persecutionDetector, mover, flipper)
     {
-        _follower = follower;
-        //_playersInZoneVisible = new List<Health>();
         _attackDetector = attackDetector;
-        _persecutionDetector = persecutionDetector;
-        _speedCoefficientPersecution = speedCoefficientPersecution;
     }
 
     public override void Enter()
     {
-        EnemyMover.SetTargetToMoveTowards(PersecutionDetector.Targets[0].transform);
-        EnemyMover.SetSpeedCoefficient(_speedCoefficientPersecution);
-
-
-        //_playersInZoneVisible = PersecutionDetector.Targets;
-        PersecutionDetector.AvailableTargetAdded += UpdateListPlayersInZoneOfVisibility;
-        PersecutionDetector.AvailableTargetRemoved += UpdateListPlayersInZoneOfVisibility;
-        _attackDetector.AvailableTargetAdded += TryEnterStateOfPatrolling;
+        Mover.SetTargetToMoveTowards(PersecutionDetector.Player.transform);
+        _attackDetector.PlayerEnteredAffectedArea += TryEnterStateOfAttack;
     }
 
     public override void Update()
     {
-        if (_persecutionDetector.Targets.Count > 1)// единицу заменить на переменную
-        {
-            _follower.SetTargetForPersecution();
+        Flipper.TurnFrontTowardsTarget(Mover.TargetToMoveTowards);
 
-            
-        }
-        else
+        if (PersecutionDetector.Player == null)
         {
             StateMachine.ChangeState<EnemyStatePatrolling>();
         }
+
+        base.Update();
     }
 
     public override void Exit()
     {
-        PersecutionDetector.AvailableTargetAdded -= UpdateListPlayersInZoneOfVisibility;
-        PersecutionDetector.AvailableTargetRemoved -= UpdateListPlayersInZoneOfVisibility;
-        _attackDetector.AvailableTargetAdded -= TryEnterStateOfPatrolling;
+        _attackDetector.PlayerEnteredAffectedArea -= TryEnterStateOfAttack;
     }
 
-    //private Health GetNearestPlayerInVisibleZone()
-    //{
-    //    List<Health> playersByDistanceEnemy = new List<Health>(_playersInZoneVisible.OrderBy(p => Mathf.Abs(p.transform.position.x - Transform.position.x)));
-
-    //    return playersByDistanceEnemy[0];
-    //}
-
-    //private void UpdateListPlayersInZoneOfVisibility()
-    //{
-    //    _playersInZoneVisible = PersecutionDetector.Targets;
-    //}
-
-    private void TryEnterStateOfPatrolling()
+    private void TryEnterStateOfAttack()
     {
-        if (_attackDetector.Targets.Count > 0)
+        if (_attackDetector.Player != null)
         {
             StateMachine.ChangeState<EnemyStateAttack>();
         }

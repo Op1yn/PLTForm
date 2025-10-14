@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class PlayerStateJump : PlayerState
 {
-    private PlayerMover _playerMover;
+    private PlayerMover _mover;
 
-    public PlayerStateJump(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, PlayerMover playerMover, Rigidbody2D rigidbody2D) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D)
+    public PlayerStateJump(PlayerStateMachine playerStateMachine, InputReader inputReader, GroundDetector groundDetector, PlayerAnimator playerAnimator, PlayerMover playerMover, Rigidbody2D rigidbody2D, Flipper flipper) : base(playerStateMachine, inputReader, groundDetector, playerAnimator, rigidbody2D, flipper)
     {
-        _playerMover = playerMover;
+        _mover = playerMover;
     }
 
     public override void Enter()
     {
-        _playerMover.Jump();
+        _mover.Jump();
         PlayerAnimator.Jump();
         GroundDetector.Landed += SetStatePlayerStateIdle;
-    }
-
-    private void SetStatePlayerStateIdle()
-    {
-        PlayerStateMachine.ChangeState<PlayerStateIdle>();
     }
 
     public override void Exit()
     {
         PlayerAnimator.StopJump();
         GroundDetector.Landed -= SetStatePlayerStateIdle;
-        Rigidbody2D.velocity = Vector3.zero;
+    }
+
+    private void SetStatePlayerStateIdle()
+    {
+        _mover.LandingStop();
+        PlayerStateMachine.ChangeState<PlayerStateIdle>();
     }
 }

@@ -1,16 +1,17 @@
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EnemyDamageDealer : MonoBehaviour
+public class EnemyDamageDealer
 {
-    [SerializeField] private EnemyDetector _attackDetector;
-    [SerializeField] private int _damage = 20;
+    private int _damage;
+    private PlayerDetectionDetector _attackDetector;
 
-    public void DealDamageToTargets(List<IDamageable> targets)
+    public EnemyDamageDealer(PlayerDetectionDetector attackDetector, int damage)
     {
-        for (int i = 0; i < targets.Count; i++)
-        {
-            targets[i].TakeDamage(_damage);
-        }
+        _attackDetector = attackDetector;
+        _damage = damage;
+    }
+
+    public void TryDamagePlayer()
+    {
+        if (_attackDetector.Player != null && _attackDetector.Player.TryGetComponent<Health>(out Health health))
+            health.TakeDamage(_damage);
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3555339428594291599}
   - component: {fileID: 3795564009071010792}
   - component: {fileID: 5432198807096868608}
-  - component: {fileID: 2416340565511263248}
+  - component: {fileID: 3813892607422778157}
   m_Layer: 7
   m_Name: View
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2416340565511263248
+--- !u!114 &3813892607422778157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5227860003390663935}
   - component: {fileID: 7054176025953463297}
-  - component: {fileID: 5070881137979489099}
+  - component: {fileID: 6444326305281051604}
   m_Layer: 7
   m_Name: VisibilityZone
   m_TagString: Untagged
@@ -198,7 +198,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.32504, y: 3.3998203}
   m_EdgeRadius: 0
---- !u!114 &5070881137979489099
+--- !u!114 &6444326305281051604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,10 +221,8 @@ GameObject:
   - component: {fileID: 4646851649583694699}
   - component: {fileID: 1882519397186925243}
   - component: {fileID: 6284677633758489620}
-  - component: {fileID: 5631431682430206790}
-  - component: {fileID: 7988808741476068140}
-  - component: {fileID: 6855612772533700468}
-  - component: {fileID: 422577146754049923}
+  - component: {fileID: 6047538360912422529}
+  - component: {fileID: 3900642727668350739}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -309,10 +307,10 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.021296293, y: 1.0717778}
-  m_Size: {x: 0.895008, y: 2.1014957}
+  m_Offset: {x: -0.015850067, y: 1.0336571}
+  m_Size: {x: 0.7752075, y: 2.0252542}
   m_Direction: 0
---- !u!114 &5631431682430206790
+--- !u!114 &6047538360912422529
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -324,17 +322,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a11f4b369f65f48b5112243a2fd051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _patrolSpeed: 2
+  _patrolSpeed: 3
   _persecutionSpeed: 5
-  _flipper: {fileID: 422577146754049923}
+  _damage: 10
   _routePoints:
   - {fileID: 0}
   - {fileID: 0}
-  _attackDetector: {fileID: 5327321718289274399}
-  _persecutionDetector: {fileID: 5070881137979489099}
-  _enemyDamageDealer: {fileID: 6855612772533700468}
-  _enemyAnimator: {fileID: 2416340565511263248}
---- !u!114 &7988808741476068140
+  _attackDetector: {fileID: 4847368147759279684}
+  _persecutionDetector: {fileID: 6444326305281051604}
+  _animator: {fileID: 3813892607422778157}
+--- !u!114 &3900642727668350739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -347,33 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maximumHealthPoints: 100
-  _healthPoints: 50
---- !u!114 &6855612772533700468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3761907673784446392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7622d72612c9783408351d2a721c8f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackDetector: {fileID: 5327321718289274399}
-  _damage: 20
---- !u!114 &422577146754049923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3761907673784446392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 577d9faaeae0fa649836de68956225b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _healthPoints: 30
 --- !u!1 &6812457216881006234
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2718351590128620445}
   - component: {fileID: 6781402397129947952}
-  - component: {fileID: 5327321718289274399}
+  - component: {fileID: 4847368147759279684}
   m_Layer: 7
   m_Name: AttackZone
   m_TagString: Untagged
@@ -442,7 +413,7 @@ CircleCollider2D:
   m_Offset: {x: 0.4, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &5327321718289274399
+--- !u!114 &4847368147759279684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
