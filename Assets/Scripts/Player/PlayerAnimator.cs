@@ -5,12 +5,12 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    public event Action CompletedStrike;
-
     public static readonly int Speed = Animator.StringToHash(nameof(Speed));
     public static readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
     public static readonly int Jumping = Animator.StringToHash(nameof(Jumping));
     public static readonly int Graunded = Animator.StringToHash(nameof(Graunded));
+
+    public event Action CompletedStrike;
 
     public void SetSpeed(float speed)
     {

@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
         _stateMachine.AddState(new EnemyStatePatrolling(_stateMachine, _animator, _persecutionDetector, MoverByPoints, Flipper));
         _stateMachine.AddState(new EnemyStatePersecution(_stateMachine, _animator, _persecutionDetector, Follower, Flipper, _attackDetector));
         _stateMachine.AddState(new EnemyStateAttack(_stateMachine, _animator, _persecutionDetector, _attackDetector, DamageDealer));
+
         _stateMachine.ChangeState<EnemyStatePatrolling>();
     }
 

@@ -17,7 +17,7 @@ public class PlayerMover : IMoving
 
     public void Move()
     {
-        _rigidbody.velocity = new Vector2(_speedX * _direction * Time.fixedDeltaTime, _rigidbody.velocity.y);
+        _rigidbody.linearVelocity = new Vector2(_speedX * _direction * Time.fixedDeltaTime, _rigidbody.linearVelocity.y);
     }
 
     public void SetDirection(float direction)
@@ -32,6 +32,6 @@ public class PlayerMover : IMoving
 
     public void LandingStop()
     {
-        _rigidbody.velocity = new Vector2(0, 0);
+        _rigidbody.linearVelocity = new Vector2(0, 0);
     }
 }

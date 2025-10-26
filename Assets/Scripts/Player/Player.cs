@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
     [field: SerializeField] public PlayerAnimator Animator { get; private set; }
 
-    public PlayerStateMachine PlayerStateMachine { get; private set; }
+    public PlayerStateMachine StateMachine { get; private set; }
     public PlayerMover Mover { get; private set; }
     public Flipper Flipper { get; private set; }
 
@@ -18,23 +18,23 @@ public class Player : MonoBehaviour
     {
         Mover = new PlayerMover(Rigidbody2D, _speedX, _jumpForce);
         Flipper = new Flipper(transform);
-        PlayerStateMachine = new PlayerStateMachine();
+        StateMachine = new PlayerStateMachine();
 
-        PlayerStateMachine.AddState(new PlayerStateIdle(PlayerStateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
-        PlayerStateMachine.AddState(new PlayerStateMove(PlayerStateMachine, Mover, InputReader, _groundingDetector, Animator, transform, Flipper, Rigidbody2D, Flipper));
-        PlayerStateMachine.AddState(new PlayerStateJump(PlayerStateMachine, InputReader, _groundingDetector, Animator, Mover, Rigidbody2D, Flipper));
-        PlayerStateMachine.AddState(new PlayerStateAttack(PlayerStateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
+        StateMachine.AddState(new PlayerStateIdle(StateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
+        StateMachine.AddState(new PlayerStateMove(StateMachine, Mover, InputReader, _groundingDetector, Animator, transform, Flipper, Rigidbody2D, Flipper));
+        StateMachine.AddState(new PlayerStateJump(StateMachine, InputReader, _groundingDetector, Animator, Mover, Rigidbody2D, Flipper));
+        StateMachine.AddState(new PlayerStateAttack(StateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
 
-        PlayerStateMachine.ChangeState<PlayerStateIdle>();
+        StateMachine.ChangeState<PlayerStateIdle>();
     }
 
     private void Update()
     {
-        PlayerStateMachine.Update();
+        StateMachine.Update();
     }
 
     private void FixedUpdate()
     {
-        PlayerStateMachine.FixedUpdate();
+        StateMachine.FixedUpdate();
     }
 }
