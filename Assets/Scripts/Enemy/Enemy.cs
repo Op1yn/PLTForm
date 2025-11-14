@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyAnimator _animator;
 
     private EnemyStateMachine _stateMachine;
+    private EnemyStateMachineFactory _enemyStateMachineFactory;
 
     public Follower Follower { get; private set; }
     public MoverByPoints MoverByPoints { get; private set; }
@@ -24,11 +25,8 @@ public class Enemy : MonoBehaviour
         MoverByPoints = new MoverByPoints(transform, _patrolSpeed, _routePoints);
         Flipper = new Flipper(transform);
         DamageDealer = new EnemyDamageDealer(_attackDetector, _damage);
-
-        _stateMachine = new EnemyStateMachine();
-        _stateMachine.AddState(new EnemyStatePatrolling(_stateMachine, _animator, _persecutionDetector, MoverByPoints, Flipper));
-        _stateMachine.AddState(new EnemyStatePersecution(_stateMachine, _animator, _persecutionDetector, Follower, Flipper, _attackDetector));
-        _stateMachine.AddState(new EnemyStateAttack(_stateMachine, _animator, _persecutionDetector, _attackDetector, DamageDealer));
+        _enemyStateMachineFactory = new EnemyStateMachineFactory(_animator, _persecutionDetector, Flipper, MoverByPoints, Follower, _attackDetector, DamageDealer);
+        _stateMachine = _enemyStateMachineFactory.GatStateMachine();
 
         _stateMachine.ChangeState<EnemyStatePatrolling>();
     }

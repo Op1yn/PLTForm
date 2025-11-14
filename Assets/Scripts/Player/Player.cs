@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
     [field: SerializeField] public PlayerAnimator Animator { get; private set; }
 
+    private PlayerStateMachineFactory _stateMachineFactory;
+
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerMover Mover { get; private set; }
     public Flipper Flipper { get; private set; }
@@ -18,12 +20,9 @@ public class Player : MonoBehaviour
     {
         Mover = new PlayerMover(Rigidbody2D, _speedX, _jumpForce);
         Flipper = new Flipper(transform);
-        StateMachine = new PlayerStateMachine();
 
-        StateMachine.AddState(new PlayerStateIdle(StateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
-        StateMachine.AddState(new PlayerStateMove(StateMachine, Mover, InputReader, _groundingDetector, Animator, transform, Flipper, Rigidbody2D, Flipper));
-        StateMachine.AddState(new PlayerStateJump(StateMachine, InputReader, _groundingDetector, Animator, Mover, Rigidbody2D, Flipper));
-        StateMachine.AddState(new PlayerStateAttack(StateMachine, InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper));
+        _stateMachineFactory = new PlayerStateMachineFactory(InputReader, _groundingDetector, Animator, Rigidbody2D, Flipper, Mover, transform);
+        StateMachine = _stateMachineFactory.GatStateMachine();
 
         StateMachine.ChangeState<PlayerStateIdle>();
     }

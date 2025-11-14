@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int _maximumHealthPoints;
-    [SerializeField] private int _healthPoints;
+    [field: SerializeField] public int MaximumHealthPoints { get; private set; }
+    [field: SerializeField] public int HealthPoints { get; private set; }
+
+    public event Action HealthChanged;
 
     private int _minimumHealthPoints = 0;
 
@@ -11,22 +14,27 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (IsNumberPositive(damage))
         {
-            if (IsNumberPositive(_healthPoints - damage))
+            if (IsNumberPositive(HealthPoints - damage))
             {
-                _healthPoints -= damage;
+                HealthPoints -= damage;
             }
             else
             {
-                _healthPoints = 0;
+                HealthPoints = 0;
                 gameObject.SetActive(false);
             }
+
+            HealthChanged?.Invoke();
         }
     }
 
     public void ReplenishHealth(int value)
     {
         if (IsNumberPositive(value))
-            _healthPoints = Mathf.Clamp(_healthPoints + value, _minimumHealthPoints, _maximumHealthPoints);
+        {
+            HealthPoints = Mathf.Clamp(HealthPoints + value, _minimumHealthPoints, MaximumHealthPoints);
+            HealthChanged?.Invoke();
+        }
     }
 
     private bool IsNumberPositive(int value)
