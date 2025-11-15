@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InstantHealthBarDisplay : HealthDisplay
+public class HealthBarDisplay : HealthDisplay
 {
     [field: SerializeField] public Slider AvailableAmountHealthBar { get; private set; }
 

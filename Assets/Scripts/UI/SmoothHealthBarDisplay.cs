@@ -1,13 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
-public class SmoothHealthBarDisplay : InstantHealthBarDisplay
+public class SmoothHealthBarDisplay : HealthBarDisplay
 {
     [SerializeField] private float _speedSmoothness;
 
-    private void Update()
+    private Coroutine _smoothChangeHealthDisplay;
+
+    public override void UpdateHealthDisplay()
     {
-        AvailableAmountHealthBar.value = Mathf.MoveTowards(AvailableAmountHealthBar.value, Health.HealthPoints, _speedSmoothness * Time.deltaTime);
+        if (_smoothChangeHealthDisplay != null)
+            StopCoroutine(_smoothChangeHealthDisplay);
+
+        _smoothChangeHealthDisplay = StartCoroutine(SmootUpdateHealthDisplay());
     }
 
-    public override void UpdateHealthDisplay() { }
+    private IEnumerator SmootUpdateHealthDisplay()
+    {
+        while (AvailableAmountHealthBar.value != Health.HealthPoints)
+        {
+            AvailableAmountHealthBar.value = Mathf.MoveTowards(AvailableAmountHealthBar.value, Health.HealthPoints, _speedSmoothness * Time.deltaTime);
+
+            yield return null;
+        }
+    }
 }
