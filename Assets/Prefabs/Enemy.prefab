@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaximumHealthPoints>k__BackingField: 100
-  <HealthPoints>k__BackingField: 50
+  <HealthPoints>k__BackingField: 90
 --- !u!1 &5349605625672934917
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmoothHealthBarDisplay
   <Health>k__BackingField: {fileID: 3900642727668350739}
   <AvailableAmountHealthBar>k__BackingField: {fileID: 3409667490215658469}
-  _speedSmoothness: 140
+  _speedSmoothness: 80
 --- !u!1 &6482950977154586076
 GameObject:
   m_ObjectHideFlags: 0
