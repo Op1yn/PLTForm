@@ -1,10 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemiesDetectionDetector : MonoBehaviour
 {
     private List<Enemy> _targets;
     public IReadOnlyList<Enemy> Targets => _targets;
+
+    public Enemy GetNearestEnemy()
+    {
+        return _targets.OrderBy(enemy => (transform.position - enemy.transform.position).sqrMagnitude).First();
+    }
 
     private void Awake()
     {

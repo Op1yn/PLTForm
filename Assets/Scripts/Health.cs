@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [field: SerializeField] public int MaximumHealthPoints { get; private set; }
-    [field: SerializeField] public int HealthPoints { get; private set; }
+    [field: SerializeField] public float MaximumHealthPoints { get; private set; }
+    [field: SerializeField] public float HealthPoints { get; private set; }
 
     public event Action HealthChanged;
 
-    private int _minimumHealthPoints = 0;
+    private float _minimumHealthPoints = 0;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (IsNumberPositive(damage))
         {
@@ -28,7 +28,7 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void ReplenishHealth(int value)
+    public void ReplenishHealth(float value)
     {
         if (IsNumberPositive(value))
         {
@@ -37,7 +37,7 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
-    private bool IsNumberPositive(int value)
+    private bool IsNumberPositive(float value)
     {
         return value > 0;
     }

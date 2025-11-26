@@ -7,9 +7,11 @@ public class InputReader : MonoBehaviour
 
     public event Action JumpingButtonPressed;
     public event Action AttackButtonPressed;
+    public event Action VampirismButtonPressed;
 
     public float Direction { get; private set; }
     public float LastDirectionOfMoving { get; private set; } = 0;
+
     private void Update()
     {
         Direction = Input.GetAxis(Horizontal);
@@ -27,6 +29,11 @@ public class InputReader : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             AttackButtonPressed?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            VampirismButtonPressed?.Invoke();
         }
     }
 }
