@@ -6,6 +6,7 @@ public class Vampirism : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private EnemiesDetectionDetector _detector;
+    [SerializeField] private Health _health;
 
     [SerializeField] public float AbilityDuration { get; private set; } = 6;
     [SerializeField] public float CooldownDuration { get; private set; } = 4;
@@ -58,8 +59,14 @@ public class Vampirism : MonoBehaviour
 
     private void ExtractHealthFromEnemyInZoneAction()
     {
+        float numberHealthPointsToExtract;
+
         if (_detector.Targets.Count > 0 && _detector.GetNearestEnemy().TryGetComponent<Health>(out Health targetHealth))
-            targetHealth.TakeDamage(_extractPerSecond * Time.deltaTime);
+        {
+            numberHealthPointsToExtract = _extractPerSecond * Time.deltaTime;
+            targetHealth.TakeDamage(numberHealthPointsToExtract);
+            _health.ReplenishHealth(numberHealthPointsToExtract);
+        }
     }
 
     private IEnumerator CountDownRecharge()
@@ -70,7 +77,7 @@ public class Vampirism : MonoBehaviour
 
         if (_durationTimeCountdown != null)
         {
-            //StopCoroutine(_durationTimeCountdown);
+            StopCoroutine(_durationTimeCountdown);
             _durationTimeCountdown = null;
 
             yield break;

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private PlayerDetectionDetector _attackDetector;
     [SerializeField] private PlayerDetectionDetector _persecutionDetector;
     [SerializeField] private EnemyAnimator _animator;
+    [SerializeField] private Health _health;
 
     private EnemyStateMachine _stateMachine;
     private EnemyStateMachineFactory _enemyStateMachineFactory;
@@ -31,8 +32,23 @@ public class Enemy : MonoBehaviour
         _stateMachine.ChangeState<EnemyStatePatrolling>();
     }
 
+    private void OnEnable()
+    {
+        _health.HealthPointsOver += ToDie;
+    }
+
     private void Update()
     {
         _stateMachine.Update();
+    }
+
+    private void OnDisable()
+    {
+        _health.HealthPointsOver -= ToDie;
+    }
+
+    private void ToDie()
+    {
+        gameObject.SetActive(false);
     }
 }

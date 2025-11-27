@@ -6,7 +6,8 @@ public class Health : MonoBehaviour, IDamageable
     [field: SerializeField] public float MaximumHealthPoints { get; private set; }
     [field: SerializeField] public float HealthPoints { get; private set; }
 
-    public event Action HealthChanged;
+    public event Action HealthPointsChanged;
+    public event Action HealthPointsOver;
 
     private float _minimumHealthPoints = 0;
 
@@ -21,10 +22,10 @@ public class Health : MonoBehaviour, IDamageable
             else
             {
                 HealthPoints = 0;
-                gameObject.SetActive(false);
+                HealthPointsOver?.Invoke();
             }
 
-            HealthChanged?.Invoke();
+            HealthPointsChanged?.Invoke();
         }
     }
 
@@ -33,7 +34,7 @@ public class Health : MonoBehaviour, IDamageable
         if (IsNumberPositive(value))
         {
             HealthPoints = Mathf.Clamp(HealthPoints + value, _minimumHealthPoints, MaximumHealthPoints);
-            HealthChanged?.Invoke();
+            HealthPointsChanged?.Invoke();
         }
     }
 

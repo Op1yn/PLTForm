@@ -342,6 +342,7 @@ MonoBehaviour:
   _attackDetector: {fileID: 4847368147759279684}
   _persecutionDetector: {fileID: 6444326305281051604}
   _animator: {fileID: 3813892607422778157}
+  _health: {fileID: 3900642727668350739}
 --- !u!114 &3900642727668350739
 MonoBehaviour:
   m_ObjectHideFlags: 0

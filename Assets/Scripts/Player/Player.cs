@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundDetector _groundingDetector;
     [SerializeField] private float _speedX;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private Health _health;
 
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
@@ -27,6 +28,11 @@ public class Player : MonoBehaviour
         StateMachine.ChangeState<PlayerStateIdle>();
     }
 
+    private void OnEnable()
+    {
+        _health.HealthPointsOver += ToDie;
+    }
+
     private void Update()
     {
         StateMachine.Update();
@@ -35,5 +41,15 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         StateMachine.FixedUpdate();
+    }
+
+    private void OnDisable()
+    {
+        _health.HealthPointsOver -= ToDie;
+    }
+
+    private void ToDie()
+    {
+        gameObject.SetActive(false);
     }
 }

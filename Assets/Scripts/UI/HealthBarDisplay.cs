@@ -8,12 +8,12 @@ public class HealthBarDisplay : StatDisplay
 
     private void OnEnable()
     {
-        Health.HealthChanged += UpdateHealthDisplay;
+        Health.HealthPointsChanged += UpdateHealthDisplay;
     }
 
     private void OnDisable()
     {
-        Health.HealthChanged -= UpdateHealthDisplay;
+        Health.HealthPointsChanged -= UpdateHealthDisplay;
     }
 
     public override void SetMaximumStatDisplay()
